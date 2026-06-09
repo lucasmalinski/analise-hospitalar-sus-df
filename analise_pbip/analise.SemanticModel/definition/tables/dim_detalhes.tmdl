@@ -1,0 +1,91 @@
+table dim_detalhes
+	lineageTag: c3b55229-7d4a-4c66-8571-0e3e83b2e047
+
+	column Sexo
+		dataType: string
+		lineageTag: 641a6833-da1c-432f-ad0a-d78bb8ea92f7
+		summarizeBy: none
+		sourceColumn: Sexo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Faixa Etária'
+		dataType: string
+		lineageTag: e7e04afb-5e3e-4921-949d-2528f05e2279
+		summarizeBy: none
+		sourceColumn: Faixa Etária
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Especialidade de Leito'
+		dataType: string
+		lineageTag: c87f793e-9af6-4534-a0b0-c9efa6c78198
+		summarizeBy: none
+		sourceColumn: Especialidade de Leito
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Caráter de Internação ou Atendimento'
+		dataType: string
+		lineageTag: 80d66749-dc05-4a69-97c6-60fae6eb701a
+		summarizeBy: none
+		sourceColumn: Caráter de Internação ou Atendimento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Complexidade do Procedimento'
+		dataType: string
+		lineageTag: 863fb667-e41f-491d-87a1-a007b1de00fc
+		summarizeBy: none
+		sourceColumn: Complexidade do Procedimento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Descrição Tipo Financiamento'
+		dataType: string
+		lineageTag: a68ea81e-a54f-4728-a239-d901e4ae9a30
+		summarizeBy: none
+		sourceColumn: Descrição Tipo Financiamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ID Detalhes'
+		dataType: int64
+		formatString: 0
+		lineageTag: e223629b-a99f-4f00-99d8-3ae0a65d3d22
+		summarizeBy: none
+		sourceColumn: ID Detalhes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_detalhes = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Lucas\Documents\analise-hospitalar-sus-df\ingestion\raw\dados_concatenados.csv"),[Delimiter=",", Columns=26, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"i_ano_compt", Int64.Type}, {"i_mes_compt", Int64.Type}, {"i_estab_cnes", Int64.Type}, {"i_desc_sigla_estab_cnes", type text}, {"i_desc_regiao_saude", type text}, {"i_desc_espec_leito", type text}, {"i_faixa_etaria", type text}, {"i_desc_sexo", type text}, {"i_proc_realizado", Int64.Type}, {"i_desc_proc_realizado", type text}, {"i_desc_grupo", type text}, {"i_cid_principal", type text}, {"i_desc_cid_principal", type text}, {"i_desc_car_int_atend", type text}, {"i_desc_complex_proc", type text}, {"i_qtd_aih", Int64.Type}, {"i_desc_radf_res", type text}, {"i_desc_tipo_financ", type text}, {"i_partos", type text}, {"i_cirurgias", type text}, {"i_desc_obito", type text}, {"i_desc_munic_res", type text}, {"i_desc_uf_res", type text}, {"i_val_total_aih", type number}, {"i_qtd_diaria_pac", Int64.Type}, {"i_qtd_diaria_uti", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"i_ano_compt", "Ano Competência"}, {"i_mes_compt", "Mês Competência"}, {"i_estab_cnes", "CNES Estabelecimento"}, {"i_desc_sigla_estab_cnes", "Sigla Estabelecimento"}, {"i_desc_regiao_saude", "Região de Saúde"}, {"i_desc_espec_leito", "Especialidade de Leito"}, {"i_faixa_etaria", "Faixa Etária"}, {"i_desc_sexo", "Sexo"}, {"i_proc_realizado", "ID Procedimento Realizado"}, {"i_desc_proc_realizado", "Descrição Procedimento Realizado"}, {"i_desc_grupo", "Grupo de Procedimento"}, {"i_cid_principal", "CID Principal"}, {"i_desc_cid_principal", "Descrição CID Principal"}, {"i_desc_car_int_atend", "Caráter de Internação ou Atendimento"}, {"i_desc_complex_proc", "Complexidade do Procedimento"}, {"i_qtd_aih", "Quantidade de AIH"}, {"i_desc_radf_res", "RA de Residência"}, {"i_desc_tipo_financ", "Descrição Tipo Financiamento"}, {"i_partos", "Parto"}, {"i_cirurgias", "Cirurgia"}, {"i_desc_obito", "Óbito"}, {"i_desc_munic_res", "Município de Residência"}, {"i_desc_uf_res", "UF de Residência"}, {"i_val_total_aih", "Valor AIH"}, {"i_qtd_diaria_pac", "Quantidade de Diárias do Paciente"}, {"i_qtd_diaria_uti", "Quantidade de Diárias UTI"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"Mês Competência", "Ano Competência", "CNES Estabelecimento", "Sigla Estabelecimento", "Região de Saúde", "Especialidade de Leito", "Faixa Etária", "Sexo", "ID Procedimento Realizado", "Descrição Procedimento Realizado", "Grupo de Procedimento", "CID Principal", "Descrição CID Principal", "Caráter de Internação ou Atendimento", "Complexidade do Procedimento", "Quantidade de AIH", "RA de Residência", "Descrição Tipo Financiamento", "Parto", "Cirurgia", "Óbito", "Município de Residência", "UF de Residência", "Valor AIH", "Quantidade de Diárias do Paciente", "Quantidade de Diárias UTI"}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Reordered Columns", "Data", each Text.Combine({Text.From([Mês Competência], "en-GB"), Text.From([Ano Competência], "en-GB")}, "/"), type text),
+				    #"Inserted Prefix" = Table.AddColumn(#"Inserted Merged Column", "Prefix", each "01/" & [Data], type text),
+				    #"Removed Columns" = Table.RemoveColumns(#"Inserted Prefix",{"Data"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Columns",{{"Prefix", "Data"}}),
+				    #"Reordered Columns1" = Table.ReorderColumns(#"Renamed Columns2",{"Mês Competência", "Ano Competência", "Data", "CNES Estabelecimento", "Sigla Estabelecimento", "Região de Saúde", "Especialidade de Leito", "Faixa Etária", "Sexo", "ID Procedimento Realizado", "Descrição Procedimento Realizado", "Grupo de Procedimento", "CID Principal", "Descrição CID Principal", "Caráter de Internação ou Atendimento", "Complexidade do Procedimento", "Quantidade de AIH", "RA de Residência", "Descrição Tipo Financiamento", "Parto", "Cirurgia", "Óbito", "Município de Residência", "UF de Residência", "Valor AIH", "Quantidade de Diárias do Paciente", "Quantidade de Diárias UTI"}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Reordered Columns1",{"Mês Competência", "Ano Competência", "Data", "CNES Estabelecimento", "Sigla Estabelecimento", "Região de Saúde", "ID Procedimento Realizado", "Descrição Procedimento Realizado", "Grupo de Procedimento", "CID Principal", "Descrição CID Principal", "Quantidade de AIH", "RA de Residência", "Parto", "Cirurgia", "Óbito", "Quantidade de Diárias do Paciente", "Quantidade de Diárias UTI", "Valor AIH", "UF de Residência", "Município de Residência"}),
+				    #"Reordered Columns2" = Table.ReorderColumns(#"Removed Columns1",{"Sexo", "Faixa Etária", "Especialidade de Leito", "Caráter de Internação ou Atendimento", "Complexidade do Procedimento", "Descrição Tipo Financiamento"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Reordered Columns2"),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 300, 1, Int64.Type),
+				    #"Reordered Columns3" = Table.ReorderColumns(#"Added Index",{"Index", "Sexo", "Faixa Etária", "Especialidade de Leito", "Caráter de Internação ou Atendimento", "Complexidade do Procedimento", "Descrição Tipo Financiamento"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Reordered Columns3",{{"Index", "ID Detalhes"}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns1","_"," a ",Replacer.ReplaceText,{"Faixa Etária"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","a anos","anos",Replacer.ReplaceText,{"Faixa Etária"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","00 a < a 1 a ano","0 a 1 ano",Replacer.ReplaceText,{"Faixa Etária"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","80 a + anos","80+ anos",Replacer.ReplaceText,{"Faixa Etária"})
+				in
+				    #"Replaced Value3"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

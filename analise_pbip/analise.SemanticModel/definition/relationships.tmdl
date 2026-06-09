@@ -1,0 +1,33 @@
+relationship 81094cb1-db37-46a8-8dd0-7890f28e61a4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_data.Data
+	toColumn: LocalDateTable_97c5e26f-8ad3-44af-94fa-e872807da633.Date
+
+relationship AutoDetected_47afc796-c7c7-43a3-a074-3c38860d5670
+	fromColumn: fato_atendimento.'ID Detalhes'
+	toColumn: dim_detalhes.'ID Detalhes'
+
+relationship AutoDetected_a5ff0e20-056c-4f00-95de-35293523f443
+	fromColumn: fato_atendimento.'CNES Estabelecimento'
+	toColumn: dim_estabelecimento.'CNES Estabelecimento'
+
+relationship AutoDetected_af501a48-d209-43fe-8c98-eb09aa76f2d7
+	fromColumn: fato_atendimento.'ID Procedimento Realizado'
+	toColumn: dim_procedimento.'ID Procedimento Realizado'
+
+relationship AutoDetected_bf2865bd-3d4a-4b18-85e5-510a0e71b387
+	fromColumn: fato_atendimento.'CID Principal'
+	toColumn: dim_diagnostico.'CID Principal'
+
+relationship AutoDetected_967fd2a3-8612-4bc9-8ac2-2531c6b8aad7
+	fromColumn: fato_atendimento.'ID RA'
+	toColumn: dim_ra_residencia.'ID RA'
+
+relationship AutoDetected_38610a76-5d74-4548-a586-4a18d231c477
+	fromColumn: fato_atendimento.'ID Município'
+	toColumn: dim_municipio_residencia.'ID Município'
+
+relationship 97d9ce9b-a25c-fa26-725e-08812a4750bf
+	fromColumn: fato_atendimento.Data
+	toColumn: dim_data.Data
+

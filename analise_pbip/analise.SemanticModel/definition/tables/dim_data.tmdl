@@ -1,0 +1,64 @@
+table dim_data
+	lineageTag: 863a40ef-472b-4eb9-aa1d-6ecc7c2c31d7
+
+	column Data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f36af206-a6c9-41c0-a76d-ff161576c25a
+		summarizeBy: none
+		sourceColumn: Data
+
+		variation Variation
+			isDefault
+			relationship: 81094cb1-db37-46a8-8dd0-7890f28e61a4
+			defaultHierarchy: LocalDateTable_97c5e26f-8ad3-44af-94fa-e872807da633.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Mês Competência'
+		dataType: int64
+		formatString: 0
+		lineageTag: efb1ea0e-68dc-4ad7-8c2b-47ad9a8b88be
+		summarizeBy: sum
+		sourceColumn: Mês Competência
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ano Competência'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6091dd80-86ee-41dd-bb50-ea6fbdb29d3f
+		summarizeBy: sum
+		sourceColumn: Ano Competência
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_data = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Lucas\Documents\analise-hospitalar-sus-df\ingestion\raw\dados_concatenados.csv"),[Delimiter=",", Columns=26, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"i_ano_compt", Int64.Type}, {"i_mes_compt", Int64.Type}, {"i_estab_cnes", Int64.Type}, {"i_desc_sigla_estab_cnes", type text}, {"i_desc_regiao_saude", type text}, {"i_desc_espec_leito", type text}, {"i_faixa_etaria", type text}, {"i_desc_sexo", type text}, {"i_proc_realizado", Int64.Type}, {"i_desc_proc_realizado", type text}, {"i_desc_grupo", type text}, {"i_cid_principal", type text}, {"i_desc_cid_principal", type text}, {"i_desc_car_int_atend", type text}, {"i_desc_complex_proc", type text}, {"i_qtd_aih", Int64.Type}, {"i_desc_radf_res", type text}, {"i_desc_tipo_financ", type text}, {"i_partos", type text}, {"i_cirurgias", type text}, {"i_desc_obito", type text}, {"i_desc_munic_res", type text}, {"i_desc_uf_res", type text}, {"i_val_total_aih", type number}, {"i_qtd_diaria_pac", Int64.Type}, {"i_qtd_diaria_uti", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"i_ano_compt", "Ano Competência"}, {"i_mes_compt", "Mês Competência"}, {"i_estab_cnes", "CNES Estabelecimento"}, {"i_desc_sigla_estab_cnes", "Sigla Estabelecimento"}, {"i_desc_regiao_saude", "Região de Saúde"}, {"i_desc_espec_leito", "Especialidade de Leito"}, {"i_faixa_etaria", "Faixa Etária"}, {"i_desc_sexo", "Sexo"}, {"i_proc_realizado", "ID Procedimento Realizado"}, {"i_desc_proc_realizado", "Descrição Procedimento Realizado"}, {"i_desc_grupo", "Grupo de Procedimento"}, {"i_cid_principal", "CID Principal"}, {"i_desc_cid_principal", "Descrição CID Principal"}, {"i_desc_car_int_atend", "Caráter de Internação ou Atendimento"}, {"i_desc_complex_proc", "Complexidade do Procedimento"}, {"i_qtd_aih", "Quantidade de AIH"}, {"i_desc_radf_res", "RA de Residência"}, {"i_desc_tipo_financ", "Descrição Tipo Financiamento"}, {"i_partos", "Parto"}, {"i_cirurgias", "Cirurgia"}, {"i_desc_obito", "Óbito"}, {"i_desc_munic_res", "Município de Residência"}, {"i_desc_uf_res", "UF de Residência"}, {"i_val_total_aih", "Valor AIH"}, {"i_qtd_diaria_pac", "Quantidade de Diárias do Paciente"}, {"i_qtd_diaria_uti", "Quantidade de Diárias UTI"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Ano Competência", "Mês Competência"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Other Columns", "Custom", each 01/[Mês Competência]/[Ano Competência]),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Custom",{"Custom"}),
+				    #"Added Custom1" = Table.AddColumn(#"Removed Columns", "Custom", each "01/[Mês Competência]/[Ano Competência]"),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Custom1",{"Custom"}),
+				    #"Sorted Rows" = Table.Sort(#"Removed Columns1",{{"Mês Competência", Order.Ascending}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows"),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Removed Duplicates", "Data", each Text.Combine({Text.From([Mês Competência], "en-GB"), Text.From([Ano Competência], "en-GB")}, "/"), type text),
+				    #"Added Prefix" = Table.TransformColumns(#"Inserted Merged Column", {{"Data", each "01/" & _, type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Prefix",{{"Data", type date}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Changed Type1",{"Data", "Mês Competência", "Ano Competência"}),
+				    #"Sorted Rows1" = Table.Sort(#"Reordered Columns",{{"Data", Order.Ascending}})
+				in
+				    #"Sorted Rows1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

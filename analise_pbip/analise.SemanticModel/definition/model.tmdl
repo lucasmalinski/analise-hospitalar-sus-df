@@ -6,17 +6,22 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-queryGroup 2022
-
-	annotation PBI_QueryGroupOrder = 0
-
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["fato_atendimento_2022"]
+annotation PBI_QueryOrder = ["fato_atendimento","dim_data","dim_estabelecimento","dim_procedimento","dim_diagnostico","dim_municipio_residencia","dim_ra_residencia","dim_detalhes"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
-ref table fato_atendimento_2022
+ref table fato_atendimento
+ref table dim_data
+ref table DateTableTemplate_a2ee219d-315f-4d6f-9b6e-c85756a4a44e
+ref table LocalDateTable_97c5e26f-8ad3-44af-94fa-e872807da633
+ref table dim_estabelecimento
+ref table dim_procedimento
+ref table dim_municipio_residencia
+ref table dim_ra_residencia
+ref table dim_detalhes
+ref table dim_diagnostico
 
 ref cultureInfo en-GB
 

@@ -4,16 +4,107 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 0,
+        "x": 2.2268889246447339,
         "y": 0
       },
       "nodes": [
         {
           "location": {
-            "x": 0,
+            "x": 656.93223277019649,
             "y": 0
           },
-          "nodeIndex": "fato_atendimento_2022",
+          "nodeIndex": "dim_data",
+          "nodeLineageTag": "863a40ef-472b-4eb9-aa1d-6ecc7c2c31d7",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 809.54578621615724,
+            "y": 220.60489182086818
+          },
+          "nodeIndex": "dim_detalhes",
+          "nodeLineageTag": "c3b55229-7d4a-4c66-8571-0e3e83b2e047",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1135.8566757844071,
+            "y": 414.71400547064428
+          },
+          "nodeIndex": "dim_estabelecimento",
+          "nodeLineageTag": "b9e4b576-b6be-41de-af91-0a5c0f79a068",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1295.150896004302,
+            "y": 659.671787181565
+          },
+          "nodeIndex": "dim_municipio_residencia",
+          "nodeLineageTag": "d22ca251-9b50-4005-b2f4-f8a44a0484d5",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1664.9577817109207,
+            "y": 572.8231191204203
+          },
+          "nodeIndex": "dim_procedimento",
+          "nodeLineageTag": "93eec0cc-b078-44f9-99ca-593fac163eaf",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1993.4955602038151,
+            "y": 555.87356310003884
+          },
+          "nodeIndex": "dim_ra_residencia",
+          "nodeLineageTag": "552dc3a9-a337-49b1-b072-3f38644653d4",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2298.7226670957366,
+            "y": 5.8319987127895843
+          },
+          "nodeIndex": "dim_diagnostico",
+          "nodeLineageTag": "27816515-0ef1-4e6f-8821-16cde30f5359",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1988,
+            "y": 0
+          },
+          "nodeIndex": "fato_atendimento",
           "size": {
             "height": 300,
             "width": 234
@@ -22,7 +113,7 @@
         }
       ],
       "name": "All tables",
-      "zoomValue": 100,
+      "zoomValue": 44.905697313103964,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

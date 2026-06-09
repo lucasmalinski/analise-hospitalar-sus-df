@@ -1,2 +1,4 @@
 ingestion/raw/*
 ingestion/.venv/
+**/.pbi/localSettings.json
+**/.pbi/cache.abf

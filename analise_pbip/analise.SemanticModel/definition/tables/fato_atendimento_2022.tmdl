@@ -1,0 +1,236 @@
+table fato_atendimento_2022
+	lineageTag: d23a3498-0e52-44d7-887b-acec2c28259b
+
+	column 'Ano Competência'
+		dataType: int64
+		formatString: 0
+		lineageTag: f06111ea-846a-4ef3-a46f-014956632b7c
+		summarizeBy: sum
+		sourceColumn: Ano Competência
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês Competência'
+		dataType: int64
+		formatString: 0
+		lineageTag: 97c69052-3394-48fe-8242-c17efdd032c6
+		summarizeBy: sum
+		sourceColumn: Mês Competência
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CNES Estabelecimento'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f0a35ff-a7a2-4c3d-a360-29bff6c93028
+		summarizeBy: sum
+		sourceColumn: CNES Estabelecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sigla Estabelecimento'
+		dataType: string
+		lineageTag: 48fa5fa7-0c28-4421-ad7b-5f29f52bfd2f
+		summarizeBy: none
+		sourceColumn: Sigla Estabelecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Região de Saúde'
+		dataType: string
+		lineageTag: 4a1b38be-a4ec-4fe8-81fb-046b19934764
+		summarizeBy: none
+		sourceColumn: Região de Saúde
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Especialidade de Leito'
+		dataType: string
+		lineageTag: 4676dac4-a718-4fd2-bd13-e9afd8e7735e
+		summarizeBy: none
+		sourceColumn: Especialidade de Leito
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Faixa Etária'
+		dataType: string
+		lineageTag: 4a70cb71-597d-4349-95cd-4987619836da
+		summarizeBy: none
+		sourceColumn: Faixa Etária
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sexo
+		dataType: string
+		lineageTag: 631ee709-d6ac-436a-9c32-4f805128f7e8
+		summarizeBy: none
+		sourceColumn: Sexo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Procedimento Realizado'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0920675d-5654-411f-9f2c-b4a246401deb
+		summarizeBy: sum
+		sourceColumn: Procedimento Realizado
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Descrição Procedimento Realizado'
+		dataType: string
+		lineageTag: 47431678-23d1-4b23-844c-276fc6849e57
+		summarizeBy: none
+		sourceColumn: Descrição Procedimento Realizado
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Grupo de Procedimento'
+		dataType: string
+		lineageTag: 07fff7fa-2c9a-4876-bed0-b35a632847d0
+		summarizeBy: none
+		sourceColumn: Grupo de Procedimento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CID Principal'
+		dataType: string
+		lineageTag: 4b9268af-1d47-420f-875a-db3ea52a03c4
+		summarizeBy: none
+		sourceColumn: CID Principal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Descrição CID Principal'
+		dataType: string
+		lineageTag: d0e1e746-0ba9-4454-be0d-ed2d10997486
+		summarizeBy: none
+		sourceColumn: Descrição CID Principal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Caráter de Internação ou Atendimento'
+		dataType: string
+		lineageTag: 93f55423-ed35-48d0-ab50-ba31c32dc71a
+		summarizeBy: none
+		sourceColumn: Caráter de Internação ou Atendimento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Complexidade do Procedimento'
+		dataType: string
+		lineageTag: 88cdb805-ac6c-44a1-bc0d-ed36b76cfaa9
+		summarizeBy: none
+		sourceColumn: Complexidade do Procedimento
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Quantidade de AIH'
+		dataType: int64
+		formatString: 0
+		lineageTag: a58af2ad-7a41-40a2-89f9-c70a32c853af
+		summarizeBy: sum
+		sourceColumn: Quantidade de AIH
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'RA de Residência'
+		dataType: string
+		lineageTag: f674e958-ed60-408a-a3bf-9ce3e4dcfa06
+		summarizeBy: none
+		sourceColumn: RA de Residência
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Descrição Tipo Financiamento'
+		dataType: string
+		lineageTag: 9e8f14db-7981-4808-ac4c-1cb77f16b21e
+		summarizeBy: none
+		sourceColumn: Descrição Tipo Financiamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parto
+		dataType: string
+		lineageTag: 77fed127-0489-428a-9d08-1358374a7cd3
+		summarizeBy: none
+		sourceColumn: Parto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cirurgia
+		dataType: string
+		lineageTag: 4312f97d-5da5-412e-83a7-27f1508e84f3
+		summarizeBy: none
+		sourceColumn: Cirurgia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Óbito
+		dataType: string
+		lineageTag: 094dd21c-9035-4dc2-9c11-7142be172db6
+		summarizeBy: none
+		sourceColumn: Óbito
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Município de Residência'
+		dataType: string
+		lineageTag: 0bd42de8-4cd0-4dcc-992e-35b1ad7e9645
+		summarizeBy: none
+		sourceColumn: Município de Residência
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'UF de Residência'
+		dataType: string
+		lineageTag: 29fb2cd4-19f0-4d2c-9bc4-4af712be1671
+		summarizeBy: none
+		sourceColumn: UF de Residência
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valor AIH'
+		dataType: double
+		lineageTag: 7166de8a-4dd1-465f-8825-4f9e81732101
+		summarizeBy: sum
+		sourceColumn: Valor AIH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Quantidade de Diárias do Paciente'
+		dataType: int64
+		formatString: 0
+		lineageTag: b940d167-c7b3-4808-9070-b8c1e396ba3e
+		summarizeBy: sum
+		sourceColumn: Quantidade de Diárias do Paciente
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Quantidade de Diárias UTI'
+		dataType: int64
+		formatString: 0
+		lineageTag: e8052ea6-50ca-4c67-b272-e6770cdeb1cb
+		summarizeBy: sum
+		sourceColumn: Quantidade de Diárias UTI
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fato_atendimento_2022 = m
+		mode: import
+		queryGroup: 2022
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Lucas\Documents\analise-hospitalar-sus-df\ingestion\raw\dados_2022.csv"),[Delimiter=",", Columns=26, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"i_ano_compt", Int64.Type}, {"i_mes_compt", Int64.Type}, {"i_estab_cnes", Int64.Type}, {"i_desc_sigla_estab_cnes", type text}, {"i_desc_regiao_saude", type text}, {"i_desc_espec_leito", type text}, {"i_faixa_etaria", type text}, {"i_desc_sexo", type text}, {"i_proc_realizado", Int64.Type}, {"i_desc_proc_realizado", type text}, {"i_desc_grupo", type text}, {"i_cid_principal", type text}, {"i_desc_cid_principal", type text}, {"i_desc_car_int_atend", type text}, {"i_desc_complex_proc", type text}, {"i_qtd_aih", Int64.Type}, {"i_desc_radf_res", type text}, {"i_desc_tipo_financ", type text}, {"i_partos", type text}, {"i_cirurgias", type text}, {"i_desc_obito", type text}, {"i_desc_munic_res", type text}, {"i_desc_uf_res", type text}, {"i_val_total_aih", type number}, {"i_qtd_diaria_pac", Int64.Type}, {"i_qtd_diaria_uti", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"i_ano_compt", "Ano Competência"}, {"i_mes_compt", "Mês Competência"}, {"i_estab_cnes", "CNES Estabelecimento"}, {"i_desc_sigla_estab_cnes", "Sigla Estabelecimento"}, {"i_desc_regiao_saude", "Região de Saúde"}, {"i_desc_espec_leito", "Especialidade de Leito"}, {"i_faixa_etaria", "Faixa Etária"}, {"i_desc_sexo", "Sexo"}, {"i_proc_realizado", "Procedimento Realizado"}, {"i_desc_proc_realizado", "Descrição Procedimento Realizado"}, {"i_desc_grupo", "Grupo de Procedimento"}, {"i_cid_principal", "CID Principal"}, {"i_desc_cid_principal", "Descrição CID Principal"}, {"i_desc_car_int_atend", "Caráter de Internação ou Atendimento"}, {"i_desc_complex_proc", "Complexidade do Procedimento"}, {"i_qtd_aih", "Quantidade de AIH"}, {"i_desc_radf_res", "RA de Residência"}, {"i_desc_tipo_financ", "Descrição Tipo Financiamento"}, {"i_partos", "Parto"}, {"i_cirurgias", "Cirurgia"}, {"i_desc_obito", "Óbito"}, {"i_desc_munic_res", "Município de Residência"}, {"i_desc_uf_res", "UF de Residência"}, {"i_val_total_aih", "Valor AIH"}, {"i_qtd_diaria_pac", "Quantidade de Diárias do Paciente"}, {"i_qtd_diaria_uti", "Quantidade de Diárias UTI"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

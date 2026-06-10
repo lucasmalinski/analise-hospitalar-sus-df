@@ -1,0 +1,13 @@
+table CaminhoBase
+	lineageTag: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+
+	partition CaminhoBase = m
+		mode: import
+		source =
+				let
+				    Source = "" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text"]
+				in
+				    Source
+
+	annotation PBI_ResultType = Text
+	annotation PBI_NavigationStepName = Navigation

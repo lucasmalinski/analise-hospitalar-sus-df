@@ -1,34 +1,44 @@
-table dim_diagnostico
-	lineageTag: 27816515-0ef1-4e6f-8821-16cde30f5359
+table dim_estabelecimento
+	lineageTag: b9e4b576-b6be-41de-af91-0a5c0f79a068
 
-	column 'CID Principal'
-		dataType: string
-		lineageTag: 4962a395-8372-426b-8d24-9a000663054c
+	column 'CNES Estabelecimento'
+		dataType: int64
+		formatString: 0
+		lineageTag: 548737f5-a3f5-4c57-9f8a-1caee2a440c2
 		summarizeBy: none
-		sourceColumn: CID Principal
+		sourceColumn: CNES Estabelecimento
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Descrição CID Principal'
+	column 'Sigla Estabelecimento'
 		dataType: string
-		lineageTag: a2f19cc9-18ba-497e-ad58-10f0796a37c0
+		lineageTag: 69386010-742c-44ff-b386-4b0c744b846b
 		summarizeBy: none
-		sourceColumn: Descrição CID Principal
+		sourceColumn: Sigla Estabelecimento
 
 		annotation SummarizationSetBy = Automatic
 
-	partition dim_diagnostico = m
+	column 'Região de Saúde'
+		dataType: string
+		lineageTag: 8b733c02-a891-44c7-a4e2-d7dc956e057d
+		summarizeBy: none
+		sourceColumn: Região de Saúde
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_estabelecimento = m
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents("C:\Users\Lucas\Documents\analise-hospitalar-sus-df\ingestion\raw\dados_concatenados.csv"),[Delimiter=",", Columns=26, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(File.Contents(CaminhoBase),[Delimiter=",", Columns=26, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"i_ano_compt", Int64.Type}, {"i_mes_compt", Int64.Type}, {"i_estab_cnes", Int64.Type}, {"i_desc_sigla_estab_cnes", type text}, {"i_desc_regiao_saude", type text}, {"i_desc_espec_leito", type text}, {"i_faixa_etaria", type text}, {"i_desc_sexo", type text}, {"i_proc_realizado", Int64.Type}, {"i_desc_proc_realizado", type text}, {"i_desc_grupo", type text}, {"i_cid_principal", type text}, {"i_desc_cid_principal", type text}, {"i_desc_car_int_atend", type text}, {"i_desc_complex_proc", type text}, {"i_qtd_aih", Int64.Type}, {"i_desc_radf_res", type text}, {"i_desc_tipo_financ", type text}, {"i_partos", type text}, {"i_cirurgias", type text}, {"i_desc_obito", type text}, {"i_desc_munic_res", type text}, {"i_desc_uf_res", type text}, {"i_val_total_aih", type number}, {"i_qtd_diaria_pac", Int64.Type}, {"i_qtd_diaria_uti", Int64.Type}}),
 				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"i_ano_compt", "Ano Competência"}, {"i_mes_compt", "Mês Competência"}, {"i_estab_cnes", "CNES Estabelecimento"}, {"i_desc_sigla_estab_cnes", "Sigla Estabelecimento"}, {"i_desc_regiao_saude", "Região de Saúde"}, {"i_desc_espec_leito", "Especialidade de Leito"}, {"i_faixa_etaria", "Faixa Etária"}, {"i_desc_sexo", "Sexo"}, {"i_proc_realizado", "ID Procedimento Realizado"}, {"i_desc_proc_realizado", "Descrição Procedimento Realizado"}, {"i_desc_grupo", "Grupo de Procedimento"}, {"i_cid_principal", "CID Principal"}, {"i_desc_cid_principal", "Descrição CID Principal"}, {"i_desc_car_int_atend", "Caráter de Internação ou Atendimento"}, {"i_desc_complex_proc", "Complexidade do Procedimento"}, {"i_qtd_aih", "Quantidade de AIH"}, {"i_desc_radf_res", "RA de Residência"}, {"i_desc_tipo_financ", "Descrição Tipo Financiamento"}, {"i_partos", "Parto"}, {"i_cirurgias", "Cirurgia"}, {"i_desc_obito", "Óbito"}, {"i_desc_munic_res", "Município de Residência"}, {"i_desc_uf_res", "UF de Residência"}, {"i_val_total_aih", "Valor AIH"}, {"i_qtd_diaria_pac", "Quantidade de Diárias do Paciente"}, {"i_qtd_diaria_uti", "Quantidade de Diárias UTI"}}),
-				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"CID Principal", "Descrição CID Principal"}),
-				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"CNES Estabelecimento", "Sigla Estabelecimento", "Região de Saúde"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Sorted Rows" = Table.Sort(#"Removed Duplicates",{{"CNES Estabelecimento", Order.Ascending}})
 				in
-				    #"Removed Duplicates"
+				    #"Sorted Rows"
 
 	annotation PBI_NavigationStepName = Navigation
 

@@ -8,10 +8,11 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["fato_atendimento","dim_data","dim_estabelecimento","dim_procedimento","dim_diagnostico","dim_municipio_residencia","dim_ra_residencia","dim_detalhes"]
+annotation PBI_QueryOrder = ["CaminhoBase","fato_atendimento","dim_data","dim_estabelecimento","dim_procedimento","dim_diagnostico","dim_municipio_residencia","dim_ra_residencia","dim_detalhes"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
+ref table CaminhoBase
 ref table fato_atendimento
 ref table dim_data
 ref table DateTableTemplate_a2ee219d-315f-4d6f-9b6e-c85756a4a44e

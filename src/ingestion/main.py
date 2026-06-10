@@ -4,8 +4,11 @@ import pandas as pd
 
 
 def main():
-    raw_dir = Path(__file__).resolve().parent / "raw"
+    project_root = Path(__file__).resolve().parents[2]
+    raw_dir = project_root / "data" / "raw"
+    concat_dir = project_root / "data" / "concat"
     raw_dir.mkdir(parents=True, exist_ok=True)
+    concat_dir.mkdir(parents=True, exist_ok=True)
 
     for ano in range(2022, 2027):
         output_file = raw_dir / f"dados_{ano}.csv"
@@ -40,7 +43,7 @@ def main():
                     pass
 
     # Concatena todos os CSVs baixados em um único arquivo usando pandas
-    concat_file = raw_dir / "dados_concatenados.csv"
+    concat_file = concat_dir / "dados_concatenados.csv"
     csv_files = sorted(
         [str(p) for p in raw_dir.glob("dados_????.csv") if p.is_file() and p.stat().st_size > 0]
     )

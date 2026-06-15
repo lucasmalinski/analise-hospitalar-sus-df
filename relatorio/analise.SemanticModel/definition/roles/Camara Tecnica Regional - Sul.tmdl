@@ -1,0 +1,7 @@
+role 'Camara Tecnica Regional - Sul'
+	modelPermission: read
+
+	tablePermission dim_estabelecimento = 'dim_estabelecimento'[Região de Saúde] = "Região Sul"
+
+	annotation PBI_Id = 1146240292f943bfb83b83a2fc8928a0
+

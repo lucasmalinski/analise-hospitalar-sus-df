@@ -4,7 +4,7 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 2.2268889246447339,
+        "x": 488.82984276530254,
         "y": 0
       },
       "nodes": [
@@ -110,10 +110,49 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1925.79043432554,
+            "y": 353.83589359078252
+          },
+          "nodeIndex": "_Medidas",
+          "nodeLineageTag": "22222222-aaaa-bbbb-cccc-000000000000",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2209.79043432554,
+            "y": 369.83589359078252
+          },
+          "nodeIndex": "CaminhoBase",
+          "nodeLineageTag": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+          "size": {
+            "height": 72,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1925.79043432554,
+            "y": 353.83589359078252
+          },
+          "nodeIndex": "Caminho Base",
+          "nodeLineageTag": "904619ff-0042-44ca-a336-3c0a0ead8dc9",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",
-      "zoomValue": 44.905697313103964,
+      "zoomValue": 89.1925905205695,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

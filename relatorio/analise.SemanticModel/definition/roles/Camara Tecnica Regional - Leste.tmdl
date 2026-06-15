@@ -1,0 +1,7 @@
+role 'Camara Tecnica Regional - Leste'
+	modelPermission: read
+
+	tablePermission dim_estabelecimento = 'dim_estabelecimento'[Região de Saúde] = "Região Leste"
+
+	annotation PBI_Id = 735b2b1dffde41999ad361b34c264411
+

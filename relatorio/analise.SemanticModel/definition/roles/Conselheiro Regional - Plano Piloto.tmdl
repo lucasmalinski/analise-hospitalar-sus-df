@@ -1,0 +1,7 @@
+role 'Conselheiro Regional - Plano Piloto'
+	modelPermission: read
+
+	tablePermission dim_ra_residencia = 'dim_ra_residencia'[RA de Residência] = "Plano Piloto"
+
+	annotation PBI_Id = 431e59c4bdb44eefab6c0f50d99cbecf
+

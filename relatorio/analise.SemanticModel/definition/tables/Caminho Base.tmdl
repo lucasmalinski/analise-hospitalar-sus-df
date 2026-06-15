@@ -1,0 +1,25 @@
+table 'Caminho Base'
+	isHidden
+	lineageTag: 904619ff-0042-44ca-a336-3c0a0ead8dc9
+
+	column 'Caminho Base'
+		dataType: string
+		isHidden
+		lineageTag: 39044233-4676-49de-9c59-4a244ceb7aa5
+		summarizeBy: none
+		sourceColumn: Caminho Base
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Caminho Base' = m
+		mode: import
+		source = "C:\Users\hulkd\OneDrive\Documents\Docs estudo\Ceub\Bussines Inteligence\Projeto Final\analise-hospitalar-sus-df\data\concat\dados_concatenados.csv" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

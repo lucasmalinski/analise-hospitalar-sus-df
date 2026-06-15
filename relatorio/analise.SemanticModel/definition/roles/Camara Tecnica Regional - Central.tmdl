@@ -1,0 +1,9 @@
+role 'Camara Tecnica Regional - Central'
+	modelPermission: read
+
+	tablePermission dim_estabelecimento = 'dim_estabelecimento'[Região de Saúde] = "Região Central"
+
+	tablePermission CaminhoBase
+
+	annotation PBI_Id = f3720ae7a90a4cabb7505cc0302eee21
+

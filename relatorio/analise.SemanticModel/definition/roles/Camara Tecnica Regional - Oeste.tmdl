@@ -1,0 +1,7 @@
+role 'Camara Tecnica Regional - Oeste'
+	modelPermission: read
+
+	tablePermission dim_estabelecimento = 'dim_estabelecimento'[Região de Saúde] = "Região Oeste"
+
+	annotation PBI_Id = a12f1ed302f3476ab2d477100704a762
+

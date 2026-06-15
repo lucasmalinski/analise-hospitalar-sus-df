@@ -1,0 +1,7 @@
+role 'Camara Tecnica Regional - Norte'
+	modelPermission: read
+
+	tablePermission dim_estabelecimento = 'dim_estabelecimento'[Região de Saúde] = "Região Norte"
+
+	annotation PBI_Id = d88e3876a7ef45df8a862fea77b607f2
+

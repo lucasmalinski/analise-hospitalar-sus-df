@@ -1,0 +1,5 @@
+role 'Presidente / Mesa Diretora CSDF'
+	modelPermission: read
+
+	annotation PBI_Id = 7b5ff6191b7d4fe58cc0cbb9c95e1e58
+

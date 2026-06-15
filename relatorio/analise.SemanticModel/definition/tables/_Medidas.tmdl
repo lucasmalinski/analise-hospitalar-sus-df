@@ -1,0 +1,28 @@
+/// Tabela dedicada para abrigar as medidas DAX do modelo.
+/// O prefixo "_" faz a tabela aparecer no topo do painel de campos.
+/// As medidas em si serao adicionadas na Fase 2 do plano de acao.
+table _Medidas
+	lineageTag: 22222222-aaaa-bbbb-cccc-000000000000
+
+	column Placeholder
+		dataType: string
+		lineageTag: 22222222-aaaa-bbbb-cccc-000000000001
+		summarizeBy: none
+		sourceColumn: Placeholder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Medidas = m
+		mode: import
+		source =
+				let
+				    Source = #table({"Placeholder"}, {{0}})
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

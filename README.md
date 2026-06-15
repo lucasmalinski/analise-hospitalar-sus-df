@@ -1,67 +1,165 @@
-# Análise Hospitalar SUS-DF Hospitalar
+# Análise Hospitalar SUS-DF
 
-Este repositório contém o pipeline de Engenharia de Dados e Business Intelligence para extração, higienização, transformação e modelagem dimensional dos dados de internações e atendimentos hospitalares do Sistema Único de Saúde (SUS) no Distrito Federal e Entorno assim como o relatório correspondente de Business Intelligence.
+> Painel analítico do desempenho da rede hospitalar do SUS no Distrito Federal entre 2022 e 2025, construído como instrumento de vigilância qualificada para o **Conselho de Saúde do Distrito Federal (CSDF)**.
 
-O objetivo do projeto é transformar registros públicos transacionais em um ecossistema analítico de alta performance para monitoramento de indicadores de saúde pública.
-
-## Arquitetura do Modelo (Star Schema)
-
-A modelagem de dados segue rigorosamente a metodologia de Ralph Kimball, estruturada em um modelo estrela focado em performance de compressão e velocidade em consultas analíticas no motor do Power BI.
-
----
-[Modelagem de Dados - DrawDB](https://www.drawdb.app/editor?shareId=6fe92f7fac81a8f17a74b9028610b5f5)
-
-> ![Star Schema](img/modelagem.png)
-
-### Otimização Estrutural: Junk Dimension (`dim_detalhes`)
-
-Para evitar a redundância de dados e manter a tabela fato puramente numérica e performática, implementou-se uma **Junk Dimension** chamada `dim_detalhes`.
-
-* Atributos textuais e perfis socio-clínicos de baixa cardinalidade foram extraídos da tabela fato e consolidados através de uma mesclagem multi-coluna no Power Query.
-* **Campos Agrupados:** `Sexo`, `Faixa Etária`, `Especialidade de Leito`, `Caráter de Internação ou Atendimento`, `Complexidade do Procedimento` e `Descrição Tipo Financiamento`.
-* **Impacto:** Milhares de linhas repetidas de texto bruto foram colapsadas em **~1200 combinações únicas de perfis**, reduzindo drasticamente o tamanho do arquivo final e otimizando os joins.
-
-### Governança de Chaves Substitutas (Surrogate Keys)
-
-Com o objetivo de blindar o modelo contra falhas, chaves vazias ou alterações nas chaves naturais dos sistemas transacionais do SUS, foram criadas chaves substitutas artificiais organizadas por faixas numéricas estritas no pipeline de ETL:
-
-* **`ID Município`** (`dim_municipio_residencia`): Iniciando em **100**
-* **`ID RA`** (`dim_ra_residencia`): Iniciando em **200**
-* **`ID Detalhes`** (`dim_detalhes`): Iniciando em **300**
-* **`ID Atendimento`** (`fato_atendimento`): Chave primária da Fato iniciando em **1000** com o prefixo alfanumérico **`AT`** (ex: `AT1000`, `AT1001`...), garantindo uma identificação exclusiva para auditorias de registros.
+**Projeto final da disciplina Business Intelligence II — CEUB.**
+**Autores:** Erick Mendes · Lucas Malinski
 
 ---
 
-## Dicionário de Tabelas do Modelo
+## 1. Problema de negócio
 
-### Tabela Fato
+O CSDF, órgão colegiado paritário previsto na Lei nº 8.142/1990, fiscaliza a aplicação dos recursos do SUS no DF. A leitura plurianual do desempenho da rede hospitalar — comparando exercícios e identificando deteriorações ou melhorias estruturais — depende hoje de relatórios pontuais da SES-DF em formatos não comparáveis.
 
-* **`fato_atendimento`**: Centraliza os IDs das dimensões e armazena as métricas quantitativas e financeiras da produção hospitalar (`Quantidade de AIH`, `Valor AIH`, `Quantidade de Diárias do Paciente` e `Quantidade de Diárias UTI`), além de flags lógicas de desfecho (`Parto`, `Cirurgia`, `Óbito`).
+Este projeto entrega à equipe técnica do CSDF um painel analítico permanente que responde à pergunta-âncora:
 
-### Tabelas Dimensão
+> **A saúde pública hospitalar do Distrito Federal melhorou ou piorou entre 2022 e 2025? E os gastos públicos, evoluem de forma sustentável?**
 
-* **`dim_detalhes`**: Junk Dimension contendo o perfil demográfico, administrativo e o nível de complexidade do atendimento. Inclui tratamento de strings para correta exibição e ordenação de faixas etárias.
-* **`dim_estabelecimento`**: Cadastro das unidades hospitalares do DF (mapeando o código CNES, a sigla oficial da unidade como HRS, HRG, HRSM, e a sua respectiva Região de Saúde).
-* **`dim_procedimento`**: Tabela de procedimentos realizados com base na tabela unificada do SUS - SIGTAP (ID, Descrição e Grupo de Procedimento).
-* **`dim_diagnostico`**: Mapeamento de patologias codificadas internacionalmente via CID Principal.
-* **`dim_data`**: Dimensão calendário analítica. Como a granularidade original do SUS opera por Competência (Ano/Mês), as datas foram normalizadas inserindo o dia padrão (`01/MM/AAAA`) para habilitar nativamente as funções de inteligência de tempo (*Time Intelligence*) do DAX.
-* **`dim_municipio_residencia`**: Origem geográfica externa do paciente atendido (Município e UF).
-* **`dim_ra_residencia`**: Regiões Administrativas do Distrito Federal, permitindo o rastreamento interno de demandas territoriais de saúde.
+Documentação completa do problema, hipóteses e critério de sucesso em [`docs/problema_de_negocio.md`](docs/problema_de_negocio.md).
 
 ---
 
-## Pipeline de Dados & Estrutura do Repositório
+## 2. Dataset
 
-O projeto está dividido em duas camadas principais organizadas no repositório:
+- **Fonte:** API pública da Secretaria de Saúde do Distrito Federal — `https://api3.saude.df.gov.br/dados_csv/`
+- **Volumetria:** 985.216 linhas, 26 colunas brutas, cobrindo competências de jan/2022 a mai/2026
+- **Granularidade:** uma linha por AIH (Autorização de Internação Hospitalar) na competência mensal
+- **Licença:** dado público (Lei nº 12.527/2011 — Lei de Acesso à Informação)
 
-### 1. Camada de Ingestão (`/ingestion`)
+Dicionário completo de colunas e armadilhas de tratamento em [`data/README.md`](data/README.md).
 
-Responsável pela extração programática dos dados públicos diretamente da API da Saúde-DF e pela consolidação multiano (2022 a 2026) num arquivo unificado via Pandas.
+---
 
-* Para detalhes de configuração do ambiente virtual, dependências e instruções de execução da extração, consulte o [README exclusivo da Camada de Ingestão](/ingestion/README.md).
+## 3. Principais KPIs
 
-### 2. Camada de Modelagem (`/analise_pbip`)
+O projeto define **11 KPIs** distribuídos em cinco eixos (produção, qualidade, financeiro, equidade, resolutividade). Os sete principais aparecem na página executiva do dashboard:
 
-Contém os arquivos de metadados do Power BI no formato **PBIP**.
+| Código | Indicador | Baseline (2022–25) | Meta |
+|---|---|---|---|
+| K01 | Total de Internações | 929k | manter ±5% YoY |
+| K03 | Volume Médio Mensal | ~19,3 mil/mês | manter ±5% YoY |
+| K04 | Taxa de Mortalidade Hospitalar | 3,05% | ≤ 3,00% |
+| K07 | Custo Médio por Internação | ~R$ 1.516 | crescimento YoY ≤ 5% |
+| K09 | Valor Total Investido | R$ 1,41 bi | crescimento real ≤ 5% a.a. |
+| K13 | Tempo Médio de Permanência | calculável | reduzir 5% vs 2024 |
+| K14 | Taxa de Uso de UTI | calculável | monitorar |
 
-* Toda a estrutura de tabelas, relacionamentos (`1:*` unidirecionais) e o M code de transformação do Power Query encontram-se expostos na pasta `analise.SemanticModel/definition/` em formato declarativo **TMDL**, facilitando o versionamento por Git, code reviews e o desenvolvimento colaborativo.
+KPIs adicionais nas páginas temáticas: Mortalidade Infantil (K15), Mortalidade Idosos (K16), Cobertura RA Mapeada (K10), Concentração Top-3 Hospitais (K11). Fórmulas DAX, polaridade e racional completo em [`docs/kpis_okrs.md`](docs/kpis_okrs.md).
+
+---
+
+## 4. OKRs
+
+**O1 — Manter a mortalidade hospitalar do SUS-DF sob controle.**
+Manter mortalidade global ≤ 3,00% até Dez/2026; reduzir mortalidade em idosos 60+ em 5% vs 2024; reduzir mortalidade infantil em 10% vs 2024.
+
+**O2 — Garantir sustentabilidade fiscal da rede hospitalar.**
+Manter crescimento YoY do custo médio ≤ 5%; reduzir tempo médio de permanência em 5% vs 2024; manter valor total investido com crescimento real ≤ 5% a.a.
+
+Detalhamento dos KRs e amarração explícita aos KPIs em [`docs/kpis_okrs.md`](docs/kpis_okrs.md) §4.
+
+---
+
+## 5. Como abrir o `.pbip`
+
+### Pré-requisitos
+
+- Power BI Desktop **versão 2026.05 ou superior** com suporte ao formato PBIP/TMDL.
+- Arquivo CSV consolidado em disco local. Para gerar: ver [`src/ingestion/README.md`](src/ingestion/README.md).
+
+### Passos
+
+1. Abrir `relatorio/analise.pbip`.
+2. **Página Inicial → Gerenciar Parâmetros**.
+3. Preencher `CaminhoBase` com o caminho absoluto local até `data/concat/dados_concatenados.csv` no seu disco. Exemplo: `C:\dev\analise-hospitalar-sus-df\data\concat\dados_concatenados.csv`.
+4. **OK → Fechar e Aplicar**. Carregamento inicial leva 1–2 minutos para processar as 985k linhas.
+
+Mais detalhes técnicos do parâmetro em [`docs/tmdl_setup/COMO_INSTALAR.md`](docs/tmdl_setup/COMO_INSTALAR.md) (se presente).
+
+---
+
+## 6. Arquitetura do modelo (Star Schema)
+
+A modelagem segue **Ralph Kimball**: uma tabela fato magra (`fato_atendimento`) conectada a sete dimensões por relacionamentos `1:N` unidirecionais.
+
+[Diagrama interativo — DrawDB](https://www.drawdb.app/editor?shareId=6fe92f7fac81a8f17a74b9028610b5f5)
+
+![Star Schema](img/modelagem.png)
+
+### Junk Dimension — `dim_detalhes`
+
+Para evitar redundância de atributos textuais na fato, seis colunas de baixa cardinalidade individual (`Sexo`, `Faixa Etária`, `Especialidade de Leito`, `Caráter de Internação`, `Complexidade do Procedimento`, `Descrição Tipo Financiamento`) foram consolidadas em uma Junk Dimension. As ~1.200 combinações reais observadas em 985k linhas viram chave única `ID Detalhes`.
+
+### Surrogate Keys
+
+Chaves artificiais por faixas numéricas estritas para tornar a tabela de origem explícita em qualquer inspeção:
+
+- `ID Município` em `dim_municipio_residencia`: inicia em **100**
+- `ID RA` em `dim_ra_residencia`: inicia em **200**
+- `ID Detalhes` em `dim_detalhes`: inicia em **300**
+- `ID Atendimento` em `fato_atendimento`: prefixo `AT` + inteiro iniciando em **1000** (ex.: `AT1547`)
+
+### Tabelas do modelo
+
+| Tabela | PK | Cardinalidade aprox. |
+|---|---|---|
+| `fato_atendimento` | `ID Atendimento` | 985k |
+| `dim_data` | `Data` | ~60 (Power Query + colunas calculadas DAX) |
+| `dim_detalhes` (Junk) | `ID Detalhes` | ~1.200 |
+| `dim_estabelecimento` | `CNES Estabelecimento` | ~30 |
+| `dim_diagnostico` | `CID Principal` | ~5.000 |
+| `dim_procedimento` | `ID Procedimento Realizado` | ~3.000 |
+| `dim_ra_residencia` | `ID RA` | ~35 (após trim) |
+| `dim_municipio_residencia` | `ID Município` | ~300 |
+| `_Medidas` | — | dedicada a 52 medidas DAX |
+
+Decisões de modelagem por escrito em [`docs/decisoes_de_modelagem.md`](docs/decisoes_de_modelagem.md).
+
+---
+
+## 7. Row-Level Security
+
+O modelo expõe **9 papéis RLS** simulando o organograma do CSDF:
+
+- **Presidente / Mesa Diretora CSDF** — visão total.
+- **7 Câmaras Técnicas Regionais** (Central, Centro-Sul, Leste, Norte, Oeste, Sudoeste, Sul) — filtradas por Região de Saúde do estabelecimento.
+- **Conselheiro Regional — Plano Piloto** — filtrado pela RA de residência do paciente.
+
+Filtros DAX e validação detalhados em [`docs/decisoes_de_modelagem.md`](docs/decisoes_de_modelagem.md) §8.
+
+---
+
+## 8. Estrutura do repositório
+
+```
+analise-hospitalar-sus-df/
+├── README.md                       este arquivo
+├── apresentacao/
+│   └── slides.pdf                  apresentação final (10 min)
+├── data/
+│   ├── README.md                   dicionário de dados e armadilhas
+│   ├── raw/                        CSVs anuais (ignorados pelo Git)
+│   └── concat/                     CSV consolidado (ignorado pelo Git)
+├── docs/
+│   ├── problema_de_negocio.md      cenário, pergunta-âncora, stakeholders
+│   ├── kpis_okrs.md                catálogo de KPIs, OKRs e cartões
+│   └── decisoes_de_modelagem.md    racional do star schema, junk dim, RLS
+├── img/
+│   └── modelagem.png               diagrama do star schema
+├── relatorio/
+│   ├── analise.pbip                Power BI Project (abrir aqui)
+│   ├── analise.Report/             definições visuais
+│   └── analise.SemanticModel/      modelo semântico em TMDL versionado
+└── src/
+    ├── EDA/
+    │   └── analise_exploratoria.ipynb   notebook Jupyter (finalizado)
+    └── ingestion/
+        ├── main.py                 pipeline de download + concat
+        └── README.md               instruções de execução com uv
+```
+
+---
+
+## 9. Versionamento
+
+Repositório versionado em formato **PBIP/TMDL** — modelo semântico declarativo em texto puro, suportando code review e merge no Git. As pastas `data/` (CSVs locais) e os arquivos `localSettings.json`/`cache.abf` do Power BI estão ignorados via `.gitignore`.

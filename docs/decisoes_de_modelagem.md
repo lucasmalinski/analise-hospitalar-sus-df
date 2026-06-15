@@ -137,11 +137,11 @@ Para portabilidade entre máquinas, o caminho do CSV é injetado via parâmetro 
 
 **Por que parâmetro e não OneDrive/SharePoint compartilhado?** Soluções de cloud sync (OneDrive, Google Drive) introduzem conflito com o git em pastas versionadas — comprovado pelos travamentos de `.git/index.lock` observados em sessões anteriores do projeto. O parâmetro local é a única solução que separa de fato versionamento (git) e dado local (disco do colaborador).
 
-### 6.2 Query base referenciada — `_Base` (Fase 1)
+### 6.2 Query base referenciada — `_Base` (diferida)
 
 Hoje, cada uma das 8 tabelas refaz o pipeline completo: `Csv.Document → PromoteHeaders → ChangedType → RenameColumns`. Em um refresh, o CSV de 985k linhas é lido **oito vezes**.
 
-A Fase 1 introduz uma query staging `_Base` (com `Enable Load = false`) que executa essas etapas comuns uma única vez; as dimensões e a fato passam a referenciá-la. Ganho esperado: refresh ~8× mais rápido em qualquer alteração de tipagem ou renome.
+A proposta original da Fase 1 era introduzir uma query staging `_Base` (com `Enable Load = false`) que executa essas etapas comuns uma única vez. **A implementação foi diferida** por duas razões: (1) a marcação `Enable Load = false` em TMDL declarativo não tem sintaxe estável documentada — tentar emular pode quebrar o load do modelo no Power BI Desktop; (2) o refresh atual leva poucos minutos e não bloqueia o cronograma do projeto. Otimização para iteração futura quando o dataset crescer ou quando o pipeline de transformações tornar-se mais complexo.
 
 ### 6.3 Trim obrigatório em `dim_ra_residencia` (Fase 1)
 

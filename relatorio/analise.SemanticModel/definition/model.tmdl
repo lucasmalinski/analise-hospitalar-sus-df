@@ -6,23 +6,33 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation __PBI_TimeIntelligenceEnabled = 1
+annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["CaminhoBase","fato_atendimento","dim_data","dim_estabelecimento","dim_procedimento","dim_diagnostico","dim_municipio_residencia","dim_ra_residencia","dim_detalhes"]
+annotation PBI_QueryOrder = ["CaminhoBase","fato_atendimento","dim_data","dim_estabelecimento","dim_procedimento","dim_diagnostico","dim_municipio_residencia","dim_ra_residencia","dim_detalhes","_Medidas","Caminho Base"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table CaminhoBase
 ref table fato_atendimento
 ref table dim_data
-ref table DateTableTemplate_a2ee219d-315f-4d6f-9b6e-c85756a4a44e
-ref table LocalDateTable_97c5e26f-8ad3-44af-94fa-e872807da633
 ref table dim_estabelecimento
 ref table dim_procedimento
 ref table dim_municipio_residencia
 ref table dim_ra_residencia
 ref table dim_detalhes
 ref table dim_diagnostico
+ref table _Medidas
+ref table 'Caminho Base'
+
+ref role 'Presidente / Mesa Diretora CSDF'
+ref role 'Camara Tecnica Regional - Central'
+ref role 'Camara Tecnica Regional - Centro-Sul'
+ref role 'Camara Tecnica Regional - Leste'
+ref role 'Camara Tecnica Regional - Norte'
+ref role 'Camara Tecnica Regional - Oeste'
+ref role 'Camara Tecnica Regional - Sudoeste'
+ref role 'Camara Tecnica Regional - Sul'
+ref role 'Conselheiro Regional - Plano Piloto'
 
 ref cultureInfo en-GB
 

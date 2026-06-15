@@ -3,7 +3,7 @@
 > Painel analítico do desempenho da rede hospitalar do SUS no Distrito Federal entre 2022 e 2025, construído como instrumento de vigilância qualificada para o **Conselho de Saúde do Distrito Federal (CSDF)**.
 
 **Projeto final da disciplina Business Intelligence II — CEUB.**
-**Autores:** Erick Mendes · Lucas Malinski
+**Autores:** Erick Cardoso Mendes · Lucas Malinski
 
 ---
 
@@ -34,15 +34,15 @@ Dicionário completo de colunas e armadilhas de tratamento em [`data/README.md`]
 
 O projeto define **11 KPIs** distribuídos em cinco eixos (produção, qualidade, financeiro, equidade, resolutividade). Os sete principais aparecem na página executiva do dashboard:
 
-| Código | Indicador | Baseline (2022–25) | Meta |
-|---|---|---|---|
-| K01 | Total de Internações | 929k | manter ±5% YoY |
-| K03 | Volume Médio Mensal | ~19,3 mil/mês | manter ±5% YoY |
-| K04 | Taxa de Mortalidade Hospitalar | 3,05% | ≤ 3,00% |
-| K07 | Custo Médio por Internação | ~R$ 1.516 | crescimento YoY ≤ 5% |
-| K09 | Valor Total Investido | R$ 1,41 bi | crescimento real ≤ 5% a.a. |
-| K13 | Tempo Médio de Permanência | calculável | reduzir 5% vs 2024 |
-| K14 | Taxa de Uso de UTI | calculável | monitorar |
+| Código | Indicador                      | Baseline (2022–25) | Meta                        |
+| ------- | ------------------------------ | ------------------- | --------------------------- |
+| K01     | Total de Internações         | 929k                | manter ±5% YoY             |
+| K03     | Volume Médio Mensal           | ~19,3 mil/mês      | manter ±5% YoY             |
+| K04     | Taxa de Mortalidade Hospitalar | 3,05%               | ≤ 3,00%                    |
+| K07     | Custo Médio por Internação  | ~R$ 1.516           | crescimento YoY ≤ 5%       |
+| K09     | Valor Total Investido          | R$ 1,41 bi          | crescimento real ≤ 5% a.a. |
+| K13     | Tempo Médio de Permanência   | calculável         | reduzir 5% vs 2024          |
+| K14     | Taxa de Uso de UTI             | calculável         | monitorar                   |
 
 KPIs adicionais nas páginas temáticas: Mortalidade Infantil (K15), Mortalidade Idosos (K16), Cobertura RA Mapeada (K10), Concentração Top-3 Hospitais (K11). Fórmulas DAX, polaridade e racional completo em [`docs/kpis_okrs.md`](docs/kpis_okrs.md).
 
@@ -101,17 +101,17 @@ Chaves artificiais por faixas numéricas estritas para tornar a tabela de origem
 
 ### Tabelas do modelo
 
-| Tabela | PK | Cardinalidade aprox. |
-|---|---|---|
-| `fato_atendimento` | `ID Atendimento` | 985k |
-| `dim_data` | `Data` | ~60 (Power Query + colunas calculadas DAX) |
-| `dim_detalhes` (Junk) | `ID Detalhes` | ~1.200 |
-| `dim_estabelecimento` | `CNES Estabelecimento` | ~30 |
-| `dim_diagnostico` | `CID Principal` | ~5.000 |
-| `dim_procedimento` | `ID Procedimento Realizado` | ~3.000 |
-| `dim_ra_residencia` | `ID RA` | ~35 (após trim) |
-| `dim_municipio_residencia` | `ID Município` | ~300 |
-| `_Medidas` | — | dedicada a 52 medidas DAX |
+| Tabela                       | PK                            | Cardinalidade aprox.                       |
+| ---------------------------- | ----------------------------- | ------------------------------------------ |
+| `fato_atendimento`         | `ID Atendimento`            | 985k                                       |
+| `dim_data`                 | `Data`                      | ~60 (Power Query + colunas calculadas DAX) |
+| `dim_detalhes` (Junk)      | `ID Detalhes`               | ~1.200                                     |
+| `dim_estabelecimento`      | `CNES Estabelecimento`      | ~30                                        |
+| `dim_diagnostico`          | `CID Principal`             | ~5.000                                     |
+| `dim_procedimento`         | `ID Procedimento Realizado` | ~3.000                                     |
+| `dim_ra_residencia`        | `ID RA`                     | ~35 (após trim)                           |
+| `dim_municipio_residencia` | `ID Município`             | ~300                                       |
+| `_Medidas`                 | —                            | dedicada a 52 medidas DAX                  |
 
 Decisões de modelagem por escrito em [`docs/decisoes_de_modelagem.md`](docs/decisoes_de_modelagem.md).
 

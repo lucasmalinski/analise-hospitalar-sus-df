@@ -1,11 +1,325 @@
 /// Tabela dedicada para abrigar as medidas DAX do modelo.
 /// O prefixo "_" faz a tabela aparecer no topo do painel de campos.
-/// As medidas em si serao adicionadas na Fase 2 do plano de acao.
 table _Medidas
 	lineageTag: 22222222-aaaa-bbbb-cccc-000000000000
 
+	measure 'Total Internações' = SUM(fato_atendimento[Quantidade de AIH])
+		formatString: #,0
+		displayFolder: 01 Basicas
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000001
+
+	measure 'Total Valor AIH' = SUM(fato_atendimento[Valor AIH])
+		formatString: "R$ "#,0.00
+		displayFolder: 01 Basicas
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000002
+
+	measure 'Total Diárias Paciente' = SUM(fato_atendimento[Quantidade de Diárias do Paciente])
+		formatString: #,0
+		displayFolder: 01 Basicas
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000003
+
+	measure 'Total Diárias UTI' = SUM(fato_atendimento[Quantidade de Diárias UTI])
+		formatString: #,0
+		displayFolder: 01 Basicas
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000004
+
+	measure 'Atendimentos Distintos' = DISTINCTCOUNT(fato_atendimento[ID Atendimento])
+		formatString: #,0
+		displayFolder: 01 Basicas
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000005
+
+	measure 'Total Óbitos' = CALCULATE([Total Internações], fato_atendimento[Óbito] = "Com óbito")
+		formatString: #,0
+		displayFolder: 02 Filtros CALCULATE
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000006
+
+	measure 'Total Partos' = CALCULATE([Total Internações], fato_atendimento[Parto] = "Sim")
+		formatString: #,0
+		displayFolder: 02 Filtros CALCULATE
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000007
+
+	measure 'Total Cirurgias' = CALCULATE([Total Internações], fato_atendimento[Cirurgia] = "Sim")
+		formatString: #,0
+		displayFolder: 02 Filtros CALCULATE
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000008
+
+	measure 'Internações Alta Complexidade' = CALCULATE([Total Internações], dim_detalhes[Complexidade do Procedimento] = "Alta complexidade")
+		formatString: #,0
+		displayFolder: 02 Filtros CALCULATE
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000009
+
+	measure 'Internações com Uso de UTI' = CALCULATE([Total Internações], fato_atendimento[Quantidade de Diárias UTI] > 0)
+		formatString: #,0
+		displayFolder: 02 Filtros CALCULATE
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000010
+
+	measure 'Internações Top-3 Hospitais' =
+			SUMX(
+			    TOPN(3, VALUES(dim_estabelecimento[CNES Estabelecimento]), [Total Internações], DESC),
+			    [Total Internações]
+			)
+		formatString: #,0
+		displayFolder: 02 Filtros CALCULATE
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000011
+
+	measure 'Taxa de Mortalidade %' = DIVIDE([Total Óbitos], [Total Internações])
+		formatString: 0.00%
+		displayFolder: 03 Taxas KPIs
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000012
+
+	measure 'Custo Médio por Internação' = DIVIDE([Total Valor AIH], [Total Internações])
+		formatString: "R$ "#,0.00
+		displayFolder: 03 Taxas KPIs
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000013
+
+	measure 'Tempo Médio de Permanência' = DIVIDE([Total Diárias Paciente], [Total Internações])
+		formatString: 0.0
+		displayFolder: 03 Taxas KPIs
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000014
+
+	measure 'Taxa de Uso de UTI %' = DIVIDE([Internações com Uso de UTI], [Total Internações])
+		formatString: 0.00%
+		displayFolder: 03 Taxas KPIs
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000015
+
+	measure 'Cobertura RA Mapeada %' =
+			VAR _Total = [Total Internações]
+			VAR _ComRA = CALCULATE([Total Internações], NOT(ISBLANK(dim_ra_residencia[RA de Residência])))
+			RETURN DIVIDE(_ComRA, _Total)
+		formatString: 0.00%
+		displayFolder: 03 Taxas KPIs
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000016
+
+	measure 'Concentração Top-3 %' = DIVIDE([Internações Top-3 Hospitais], [Total Internações])
+		formatString: 0.00%
+		displayFolder: 03 Taxas KPIs
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000017
+
+	measure 'Volume Médio Mensal' = DIVIDE([Total Internações], DISTINCTCOUNT(dim_data[Ano-Mês]))
+		formatString: #,0.0
+		displayFolder: 03 Taxas KPIs
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000018
+
+	measure 'Mortalidade Infantil 0-1 %' =
+			VAR _Obitos = CALCULATE([Total Óbitos], dim_detalhes[Faixa Etária] = "0 a 1 ano")
+			VAR _Internacoes = CALCULATE([Total Internações], dim_detalhes[Faixa Etária] = "0 a 1 ano")
+			RETURN DIVIDE(_Obitos, _Internacoes)
+		formatString: 0.00%
+		displayFolder: 03 Taxas KPIs
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000019
+
+	measure 'Mortalidade Idosos 60+ %' =
+			VAR _Faixas = { "60 a 64 anos", "65 a 69 anos", "70 a 74 anos", "75 a 79 anos", "80+ anos" }
+			VAR _Obitos = CALCULATE([Total Óbitos], dim_detalhes[Faixa Etária] IN _Faixas)
+			VAR _Internacoes = CALCULATE([Total Internações], dim_detalhes[Faixa Etária] IN _Faixas)
+			RETURN DIVIDE(_Obitos, _Internacoes)
+		formatString: 0.00%
+		displayFolder: 03 Taxas KPIs
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000020
+
+	measure 'Internações YTD' = TOTALYTD([Total Internações], dim_data[Data])
+		formatString: #,0
+		displayFolder: 04 Time Intelligence
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000021
+
+	measure 'Valor AIH YTD' = TOTALYTD([Total Valor AIH], dim_data[Data])
+		formatString: "R$ "#,0.00
+		displayFolder: 04 Time Intelligence
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000022
+
+	measure 'Internações Período Anterior' = CALCULATE([Total Internações], SAMEPERIODLASTYEAR(dim_data[Data]))
+		formatString: #,0
+		displayFolder: 04 Time Intelligence
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000023
+
+	measure 'Valor AIH Período Anterior' = CALCULATE([Total Valor AIH], SAMEPERIODLASTYEAR(dim_data[Data]))
+		formatString: "R$ "#,0.00
+		displayFolder: 04 Time Intelligence
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000024
+
+	measure 'Mortalidade Período Anterior %' = CALCULATE([Taxa de Mortalidade %], SAMEPERIODLASTYEAR(dim_data[Data]))
+		formatString: 0.00%
+		displayFolder: 04 Time Intelligence
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000025
+
+	measure 'Custo Médio Período Anterior' = CALCULATE([Custo Médio por Internação], SAMEPERIODLASTYEAR(dim_data[Data]))
+		formatString: "R$ "#,0.00
+		displayFolder: 04 Time Intelligence
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000026
+
+	measure 'Tempo Permanência Período Anterior' = CALCULATE([Tempo Médio de Permanência], SAMEPERIODLASTYEAR(dim_data[Data]))
+		formatString: 0.0
+		displayFolder: 04 Time Intelligence
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000027
+
+	measure 'Uso UTI Período Anterior %' = CALCULATE([Taxa de Uso de UTI %], SAMEPERIODLASTYEAR(dim_data[Data]))
+		formatString: 0.00%
+		displayFolder: 04 Time Intelligence
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000028
+
+	measure 'Volume Médio Período Anterior' = CALCULATE([Volume Médio Mensal], SAMEPERIODLASTYEAR(dim_data[Data]))
+		formatString: #,0.0
+		displayFolder: 04 Time Intelligence
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000029
+
+	measure '% Var Internações YoY' = DIVIDE([Total Internações] - [Internações Período Anterior], [Internações Período Anterior])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 05 Variações YoY
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000030
+
+	measure '% Var Valor AIH YoY' = DIVIDE([Total Valor AIH] - [Valor AIH Período Anterior], [Valor AIH Período Anterior])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 05 Variações YoY
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000031
+
+	measure 'Δpp Taxa Mortalidade YoY' = [Taxa de Mortalidade %] - [Mortalidade Período Anterior %]
+		formatString: +0.00%;-0.00%;0.00%
+		displayFolder: 05 Variações YoY
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000032
+
+	measure '% Var Custo Médio YoY' = DIVIDE([Custo Médio por Internação] - [Custo Médio Período Anterior], [Custo Médio Período Anterior])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 05 Variações YoY
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000033
+
+	measure '% Var Tempo Permanência YoY' = DIVIDE([Tempo Médio de Permanência] - [Tempo Permanência Período Anterior], [Tempo Permanência Período Anterior])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 05 Variações YoY
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000034
+
+	measure 'KPI K01 Internações Subtitle' =
+			VAR _atual = [Total Internações]
+			VAR _anterior = [Internações Período Anterior]
+			VAR _delta = _atual - _anterior
+			VAR _pct = DIVIDE(_delta, _anterior)
+			VAR _seta = IF(_delta >= 0, "▲", "▼")
+			VAR _sinal = IF(_delta >= 0, "+", "")
+			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, "#,##0") & " vs Mesmo Período Ano Anterior"
+		displayFolder: 06 Cartoes KPI Subtitulo
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000035
+
+	measure 'KPI K03 Volume Mensal Subtitle' =
+			VAR _atual = [Volume Médio Mensal]
+			VAR _anterior = [Volume Médio Período Anterior]
+			VAR _delta = _atual - _anterior
+			VAR _pct = DIVIDE(_delta, _anterior)
+			VAR _seta = IF(_delta >= 0, "▲", "▼")
+			VAR _sinal = IF(_delta >= 0, "+", "")
+			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, "#,##0.0") & " vs Mesmo Período Ano Anterior"
+		displayFolder: 06 Cartoes KPI Subtitulo
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000036
+
+	measure 'KPI K04 Mortalidade Subtitle' =
+			VAR _atual = [Taxa de Mortalidade %]
+			VAR _anterior = [Mortalidade Período Anterior %]
+			VAR _delta = _atual - _anterior
+			VAR _seta = IF(_delta <= 0, "▼", "▲")
+			VAR _sinal = IF(_delta >= 0, "+", "")
+			RETURN _seta & " " & _sinal & FORMAT(_delta, "0.00%") & " p.p. | " & FORMAT(_anterior, "0.00%") & " vs Mesmo Período Ano Anterior"
+		displayFolder: 06 Cartoes KPI Subtitulo
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000037
+
+	measure 'KPI K07 Custo Médio Subtitle' =
+			VAR _atual = [Custo Médio por Internação]
+			VAR _anterior = [Custo Médio Período Anterior]
+			VAR _delta = _atual - _anterior
+			VAR _pct = DIVIDE(_delta, _anterior)
+			VAR _seta = IF(_delta <= 0, "▼", "▲")
+			VAR _sinal = IF(_delta >= 0, "+", "")
+			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, """R$ ""#,##0.00") & " vs Mesmo Período Ano Anterior"
+		displayFolder: 06 Cartoes KPI Subtitulo
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000038
+
+	measure 'KPI K09 Valor Total Subtitle' =
+			VAR _atual = [Total Valor AIH]
+			VAR _anterior = [Valor AIH Período Anterior]
+			VAR _delta = _atual - _anterior
+			VAR _pct = DIVIDE(_delta, _anterior)
+			VAR _seta = IF(_delta >= 0, "▲", "▼")
+			VAR _sinal = IF(_delta >= 0, "+", "")
+			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, """R$ ""#,##0") & " vs Mesmo Período Ano Anterior"
+		displayFolder: 06 Cartoes KPI Subtitulo
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000039
+
+	measure 'KPI K13 Tempo Permanência Subtitle' =
+			VAR _atual = [Tempo Médio de Permanência]
+			VAR _anterior = [Tempo Permanência Período Anterior]
+			VAR _delta = _atual - _anterior
+			VAR _pct = DIVIDE(_delta, _anterior)
+			VAR _seta = IF(_delta <= 0, "▼", "▲")
+			VAR _sinal = IF(_delta >= 0, "+", "")
+			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, "0.0") & " dias vs Mesmo Período Ano Anterior"
+		displayFolder: 06 Cartoes KPI Subtitulo
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000040
+
+	measure 'KPI K14 Uso UTI Subtitle' =
+			VAR _atual = [Taxa de Uso de UTI %]
+			VAR _anterior = [Uso UTI Período Anterior %]
+			VAR _delta = _atual - _anterior
+			VAR _seta = IF(_delta >= 0, "▲", "▼")
+			VAR _sinal = IF(_delta >= 0, "+", "")
+			RETURN _seta & " " & _sinal & FORMAT(_delta, "0.00%") & " p.p. | " & FORMAT(_anterior, "0.00%") & " vs Mesmo Período Ano Anterior"
+		displayFolder: 06 Cartoes KPI Subtitulo
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000041
+
+	measure 'KPI K01 Internações Color' = "#0E7C7B"
+		displayFolder: 07 Cartoes KPI Cor
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000042
+
+	measure 'KPI K03 Volume Mensal Color' = "#0E7C7B"
+		displayFolder: 07 Cartoes KPI Cor
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000043
+
+	measure 'KPI K04 Mortalidade Color' =
+			VAR _delta = [Taxa de Mortalidade %] - [Mortalidade Período Anterior %]
+			RETURN SWITCH(TRUE(), _delta < 0, "#0E7C7B", _delta > 0, "#C7185A", "#666666")
+		displayFolder: 07 Cartoes KPI Cor
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000044
+
+	measure 'KPI K07 Custo Médio Color' =
+			VAR _delta = [Custo Médio por Internação] - [Custo Médio Período Anterior]
+			RETURN SWITCH(TRUE(), _delta < 0, "#0E7C7B", _delta > 0, "#C7185A", "#666666")
+		displayFolder: 07 Cartoes KPI Cor
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000045
+
+	measure 'KPI K09 Valor Total Color' = "#0E7C7B"
+		displayFolder: 07 Cartoes KPI Cor
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000046
+
+	measure 'KPI K13 Tempo Permanência Color' =
+			VAR _delta = [Tempo Médio de Permanência] - [Tempo Permanência Período Anterior]
+			RETURN SWITCH(TRUE(), _delta < 0, "#0E7C7B", _delta > 0, "#C7185A", "#666666")
+		displayFolder: 07 Cartoes KPI Cor
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000047
+
+	measure 'KPI K14 Uso UTI Color' = "#0E7C7B"
+		displayFolder: 07 Cartoes KPI Cor
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000048
+
+	measure 'Gauge Mortalidade Min' = 0
+		formatString: 0.00%
+		displayFolder: 08 Velocimetro Mortalidade
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000049
+
+	measure 'Gauge Mortalidade Max' = 0.05
+		formatString: 0.00%
+		displayFolder: 08 Velocimetro Mortalidade
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000050
+
+	measure 'Gauge Mortalidade Target' = 0.03
+		formatString: 0.00%
+		displayFolder: 08 Velocimetro Mortalidade
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000051
+
+	measure 'Gauge Mortalidade Cor' =
+			VAR _val = [Taxa de Mortalidade %]
+			RETURN SWITCH(TRUE(), _val <= 0.03, "#0E7C7B", _val <= 0.04, "#E89A3C", "#C7185A")
+		displayFolder: 08 Velocimetro Mortalidade
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000052
+
 	column Placeholder
 		dataType: string
+		isHidden
 		lineageTag: 22222222-aaaa-bbbb-cccc-000000000001
 		summarizeBy: none
 		sourceColumn: Placeholder

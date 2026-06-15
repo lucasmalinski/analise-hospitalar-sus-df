@@ -3,7 +3,7 @@
 > Painel analítico do desempenho da rede hospitalar do SUS no Distrito Federal entre 2022 e 2025, construído como instrumento de vigilância qualificada para o **Conselho de Saúde do Distrito Federal (CSDF)**.
 
 **Projeto final da disciplina Business Intelligence II — CEUB.**
-**Autores:** Erick Cardoso Mendes · Lucas Malinski
+**Autores:** Erick Cardoso Mendes · Lucas Patriota Malinsk da Silva Pinto
 
 ---
 
@@ -56,7 +56,7 @@ Manter mortalidade global ≤ 3,00% até Dez/2026; reduzir mortalidade em idosos
 **O2 — Garantir sustentabilidade fiscal da rede hospitalar.**
 Manter crescimento YoY do custo médio ≤ 5%; reduzir tempo médio de permanência em 5% vs 2024; manter valor total investido com crescimento real ≤ 5% a.a.
 
-Detalhamento dos KRs e amarração explícita aos KPIs em [`docs/kpis_okrs.md`](docs/kpis_okrs.md) §4.
+Detalhamento dos KRs e amarração explícita aos KPIs em [`docs/kpis_okrs.md`](docs/kpis_okrs.md), item 4.
 
 ---
 
@@ -73,8 +73,6 @@ Detalhamento dos KRs e amarração explícita aos KPIs em [`docs/kpis_okrs.md`](
 2. **Página Inicial → Gerenciar Parâmetros**.
 3. Preencher `CaminhoBase` com o caminho absoluto local até `data/concat/dados_concatenados.csv` no seu disco. Exemplo: `C:\dev\analise-hospitalar-sus-df\data\concat\dados_concatenados.csv`.
 4. **OK → Fechar e Aplicar**. Carregamento inicial leva 1–2 minutos para processar as 985k linhas.
-
-Mais detalhes técnicos do parâmetro em [`docs/tmdl_setup/COMO_INSTALAR.md`](docs/tmdl_setup/COMO_INSTALAR.md) (se presente).
 
 ---
 
@@ -125,7 +123,7 @@ O modelo expõe **9 papéis RLS** simulando o organograma do CSDF:
 - **7 Câmaras Técnicas Regionais** (Central, Centro-Sul, Leste, Norte, Oeste, Sudoeste, Sul) — filtradas por Região de Saúde do estabelecimento.
 - **Conselheiro Regional — Plano Piloto** — filtrado pela RA de residência do paciente.
 
-Filtros DAX e validação detalhados em [`docs/decisoes_de_modelagem.md`](docs/decisoes_de_modelagem.md) §8.
+Filtros DAX e validação detalhados em [`docs/decisoes_de_modelagem.md`](docs/decisoes_de_modelagem.md), item 8.
 
 ---
 

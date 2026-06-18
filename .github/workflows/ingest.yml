@@ -1,0 +1,34 @@
+name: Pipeline de Dados SUS-DF
+
+on:
+  schedule:
+    - cron: '0 3 15 * *' # Roda todo dia 15 às 3h da manhã UTC
+  workflow_dispatch: # Adiciona o botão "Run workflow" na aba Actions do GitHub
+
+jobs:
+  executar-ingestao:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar o uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Configurar o Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "src/ingestion/.python-version"
+
+      - name: Rodar Script de Ingestão e Upload
+        env:
+          PYTHONUNBUFFERED: "1" # Força os prints de main.py a aparecerem enquanto executam.
+          AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
+          AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+          AZURE_STORAGE_CONTAINER_NAME: ${{ secrets.AZURE_STORAGE_CONTAINER_NAME }}
+        run: |
+          cd src/ingestion
+          uv run main.py

@@ -1,19 +1,19 @@
 """Pipeline de ingestao SUS-DF.
 
 Baixa as bases anuais de AIH via API publica saude-DF (2022-2026),
-salva cada ano em ``data/raw/dados_YYYY.csv`` e gera o consolidado em
-``data/concat/dados_concatenados.csv`` para consumo pelo modelo Power BI.
+salva cada ano em `data/raw/dados_YYYY.csv` e gera o consolidado.
+Se configurado com credenciais, envia o resultado para o Azure Blob Storage.
 
 Execucao:
     cd src/ingestion
     uv run main.py
 """
 
+import os
 from pathlib import Path
 
 import pandas as pd
 import requests
-
 
 # Configuracao ---------------------------------------------------------------
 
@@ -30,16 +30,19 @@ BASE_URL = (
     "&parto=disable&cirurgia=disable&obito=disable"
 )
 
+# Configuracao do Azure vinda das variaveis de ambiente
+_az_name = os.getenv("AZURE_STORAGE_ACCOUNT_NAME")
+_az_key = os.getenv("AZURE_STORAGE_ACCOUNT_KEY")
+_az_container = os.getenv("AZURE_STORAGE_CONTAINER_NAME")
 
+# Garantia contra \r do Windows em .env
+AZURE_ACCOUNT_NAME = _az_name.strip() if _az_name else None
+AZURE_ACCOUNT_KEY = _az_key.strip() if _az_key else None
+CONTAINER_NAME = _az_container.strip() if _az_container else None
 # Etapas ---------------------------------------------------------------------
 
 def baixar_ano(ano: int) -> Path | None:
-    """Baixa o CSV de um ano para ``data/raw/dados_{ano}.csv``.
-
-    O download usa um arquivo temporario ``.part`` renomeado ao final
-    para evitar deixar arquivo parcial no disco em caso de falha.
-    Se ja existe arquivo nao vazio, pula (operacao idempotente).
-    """
+    """Baixa o CSV de um ano para `data/raw/dados_{ano}.csv`."""
     output_file = RAW_DIR / f"dados_{ano}.csv"
 
     if output_file.exists() and output_file.stat().st_size > 0:
@@ -66,15 +69,8 @@ def baixar_ano(ano: int) -> Path | None:
                 pass
         return None
 
-
 def concatenar() -> None:
-    """Le todos os CSVs anuais de ``data/raw/`` e grava o consolidado.
-
-    A leitura usa ``pandas.read_csv`` por arquivo, depois ``pd.concat``
-    com ``ignore_index=True`` para um arquivo unico em
-    ``data/concat/dados_concatenados.csv``. Falhas de leitura individuais
-    sao reportadas mas nao interrompem o processo.
-    """
+    """Le todos os CSVs anuais, grava localmente e envia para o Azure."""
     csv_files = sorted(
         str(p)
         for p in RAW_DIR.glob("dados_????.csv")
@@ -98,24 +94,44 @@ def concatenar() -> None:
 
     try:
         combined = pd.concat(dfs, ignore_index=True)
+        
+        # 1. Salva localmente (bom para testar no seu próprio PC)
         combined.to_csv(CONCAT_FILE, index=False)
         rel = CONCAT_FILE.relative_to(PROJECT_ROOT)
-        print(
-            f"  [ok]   {len(dfs)} arquivos consolidados em {rel} "
-            f"({len(combined):,} linhas)"
-        )
-    except Exception as error:
-        print(f"  [err]  falha ao concatenar: {error}")
+        print(f"  [ok]   {len(dfs)} arquivos consolidados em {rel} ({len(combined):,} linhas)")
 
+        # 2. Faz upload para o Azure se as chaves estiverem configuradas
+        if AZURE_ACCOUNT_NAME and AZURE_ACCOUNT_KEY:
+            print("  [upload] Enviando consolidado para o Azure Blob Storage...")
+            storage_options = {
+                "account_name": AZURE_ACCOUNT_NAME,
+                "account_key": AZURE_ACCOUNT_KEY
+            }
+            azure_path = f"az://{CONTAINER_NAME}/dados_concatenados.csv"
+            
+            combined.to_csv(azure_path, storage_options=storage_options, index=False)
+            
+            public_url = f"https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{CONTAINER_NAME}/dados_concatenados.csv"
+            print(f"  [ok]   Upload concluído!")
+            print(f"  [url]  Público em: {public_url}")
+        else:
+            print("  [skip] Upload para o Azure ignorado (credenciais ausentes).")
+
+    except Exception as error:
+        print(f"  [err]  falha ao concatenar ou enviar: {error}")
 
 # Entrypoint -----------------------------------------------------------------
 
 def main() -> None:
     """Executa o pipeline completo: cria pastas, baixa por ano, concatena."""
-    print(f"Pipeline ingestao SUS-DF")
+    print("Pipeline ingestão SUS-DF")
     print(f"  raiz   : {PROJECT_ROOT}")
     print(f"  raw    : {RAW_DIR.relative_to(PROJECT_ROOT)}/dados_YYYY.csv")
     print(f"  concat : {CONCAT_FILE.relative_to(PROJECT_ROOT)}")
+    if AZURE_ACCOUNT_NAME and AZURE_ACCOUNT_KEY and CONTAINER_NAME:
+        print(f"  azure  : variáveis de conexão azure configuradas")
+    else: 
+        print(f"  azure  : variáveis de conexão azure não configuradas")
 
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     CONCAT_DIR.mkdir(parents=True, exist_ok=True)
@@ -124,11 +140,10 @@ def main() -> None:
     for ano in YEAR_RANGE:
         baixar_ano(ano)
 
-    print("\n[2/2] Consolidacao:")
+    print("\n[2/2] Consolidacao e Upload (Se Habilitado):")
     concatenar()
 
     print("\nDone.")
-
 
 if __name__ == "__main__":
     main()

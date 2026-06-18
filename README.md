@@ -1,6 +1,10 @@
 # Análise Hospitalar SUS-DF
 
+[![Status da Ingestão](https://github.com/lucasmalinski/analise-hospitalar-sus-df/actions/workflows/ingest.yml/badge.svg)](https://github.com/lucasmalinski/analise-hospitalar-sus-df/actions/workflows/ingest.yml)
+[![Data Lake (Azure)](https://img.shields.io/website?url=https%3A%2F%2Fanalisesus.blob.core.windows.net%2Fdados-publicos%2Fdados_concatenados.csv&label=Data%20Lake%20(Azure)&up_message=online&down_message=offline&color=blue)](https://analisesus.blob.core.windows.net/dados-publicos/dados_concatenados.csv)
+
 > Painel analítico do desempenho da rede hospitalar do SUS no Distrito Federal entre 2022 e 2025, construído como instrumento de vigilância qualificada para o **Conselho de Saúde do Distrito Federal (CSDF)**.
+> O projeto implementa para a infraestrutura de dados um pipeline de ETL idempotente em Python que consome a API da Saúde-DF, orquestrado via GitHub Actions, com armazenamento centralizado em Azure Blob Storage para consumo otimizado via Power BI.
 
 **Projeto final da disciplina Business Intelligence II — CEUB.**
 
@@ -35,15 +39,15 @@ Dicionário completo de colunas e armadilhas de tratamento em [`data/README.md`]
 
 O projeto define **11 KPIs** distribuídos em cinco eixos (produção, qualidade, financeiro, equidade, resolutividade). Os sete principais aparecem na página executiva do dashboard:
 
-| Código | Indicador                      | Baseline (2022–25) | Meta                        |
+|  Código | Indicador                      |  Baseline (2022–25) | Meta                        |
 | ------- | ------------------------------ | ------------------- | --------------------------- |
-| K01     | Total de Internações         | 929k                | manter ±5% YoY             |
-| K03     | Volume Médio Mensal           | ~19,3 mil/mês      | manter ±5% YoY             |
-| K04     | Taxa de Mortalidade Hospitalar | 3,05%               | ≤ 3,00%                    |
-| K07     | Custo Médio por Internação  | ~R$ 1.516           | crescimento YoY ≤ 5%       |
-| K09     | Valor Total Investido          | R$ 1,41 bi          | crescimento real ≤ 5% a.a. |
-| K13     | Tempo Médio de Permanência   | calculável         | reduzir 5% vs 2024          |
-| K14     | Taxa de Uso de UTI             | calculável         | monitorar                   |
+| K01     | Total de Internações           | 929k                | manter ±5% YoY              |
+| K03     | Volume Médio Mensal            | ~19,3 mil/mês       | manter ±5% YoY              |
+| K04     | Taxa de Mortalidade Hospitalar | 3,05%               | ≤ 3,00%                     |
+| K07     | Custo Médio por Internação     | ~R$ 1.516           | crescimento YoY ≤ 5%        |
+| K09     | Valor Total Investido          | R$ 1,41 bi          | crescimento real ≤ 5% a.a.  |
+| K13     | Tempo Médio de Permanência     | calculável          | reduzir 5% vs 2024          |
+| K14     | Taxa de Uso de UTI             | calculável          | monitorar                   |
 
 KPIs adicionais nas páginas temáticas: Mortalidade Infantil (K15), Mortalidade Idosos (K16), Cobertura RA Mapeada (K10), Concentração Top-3 Hospitais (K11). Fórmulas DAX, polaridade e racional completo em [`docs/kpis_okrs.md`](docs/kpis_okrs.md).
 
@@ -66,14 +70,11 @@ Detalhamento dos KRs e amarração explícita aos KPIs em [`docs/kpis_okrs.md`](
 ### Pré-requisitos
 
 - Power BI Desktop **versão 2026.05 ou superior** com suporte ao formato PBIP/TMDL.
-- Arquivo CSV consolidado em disco local. Para gerar: ver [`src/ingestion/README.md`](src/ingestion/README.md).
 
 ### Passos
 
 1. Abrir `relatorio/analise.pbip`.
-2. **Página Inicial → Gerenciar Parâmetros**.
-3. Preencher `CaminhoBase` com o caminho absoluto local até `data/concat/dados_concatenados.csv` no seu disco. Exemplo: `C:\dev\analise-hospitalar-sus-df\data\concat\dados_concatenados.csv`.
-4. **OK → Fechar e Aplicar**. Carregamento inicial leva 1–2 minutos para processar as 985k linhas.
+2. Atualizar Visualização
 
 ---
 
@@ -102,15 +103,15 @@ Chaves artificiais por faixas numéricas estritas para tornar a tabela de origem
 
 | Tabela                       | PK                            | Cardinalidade aprox.                       |
 | ---------------------------- | ----------------------------- | ------------------------------------------ |
-| `fato_atendimento`         | `ID Atendimento`            | 985k                                       |
-| `dim_data`                 | `Data`                      | ~60 (Power Query + colunas calculadas DAX) |
-| `dim_detalhes` (Junk)      | `ID Detalhes`               | ~1.200                                     |
-| `dim_estabelecimento`      | `CNES Estabelecimento`      | ~30                                        |
-| `dim_diagnostico`          | `CID Principal`             | ~5.000                                     |
-| `dim_procedimento`         | `ID Procedimento Realizado` | ~3.000                                     |
-| `dim_ra_residencia`        | `ID RA`                     | ~35 (após trim)                           |
-| `dim_municipio_residencia` | `ID Município`             | ~300                                       |
-| `_Medidas`                 | —                            | dedicada a 52 medidas DAX                  |
+| `fato_atendimento`           | `ID Atendimento`              | 985k                                       |
+| `dim_data`                   | `Data`                        | ~60 (Power Query + colunas calculadas DAX) |
+| `dim_detalhes` (Junk)        | `ID Detalhes`                 | ~1.200                                     |
+| `dim_estabelecimento`        | `CNES Estabelecimento`        | ~30                                        |
+| `dim_diagnostico`            | `CID Principal`               | ~5.000                                     |
+| `dim_procedimento`           | `ID Procedimento Realizado`   | ~3.000                                     |
+| `dim_ra_residencia`          | `ID RA`                       | ~35 (após trim)                            |
+| `dim_municipio_residencia`   | `ID Município`                | ~300                                       |
+| `_Medidas`                   | —                             | dedicada a 52 medidas DAX                  |
 
 Decisões de modelagem por escrito em [`docs/decisoes_de_modelagem.md`](docs/decisoes_de_modelagem.md).
 
@@ -130,7 +131,7 @@ Filtros DAX e validação detalhados em [`docs/decisoes_de_modelagem.md`](docs/d
 
 ## 8. Estrutura do repositório
 
-```
+```text
 analise-hospitalar-sus-df/
 ├── README.md                       este arquivo
 ├── apresentacao/
@@ -154,7 +155,9 @@ analise-hospitalar-sus-df/
     │   └── analise_exploratoria.ipynb   notebook Jupyter (finalizado)
     └── ingestion/
         ├── main.py                 pipeline de download + concat
-        └── README.md               instruções de execução com uv
+        ├── .env                    variáveis de ambiente (criado manualmente)
+        ├── README.md               instruções de execução com uv
+        └── pyproject.toml          requirements de main.py
 ```
 
 ---

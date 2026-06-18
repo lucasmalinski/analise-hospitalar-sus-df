@@ -25,6 +25,7 @@ jobs:
 
       - name: Rodar Script de Ingestão e Upload
         env:
+          PYTHONUNBUFFERED: "1" # Força os prints de main.py a aparecerem enquanto executam.
           AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
           AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
         run: |

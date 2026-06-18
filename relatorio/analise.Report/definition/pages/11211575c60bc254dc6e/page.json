@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "11211575c60bc254dc6e",
+  "displayName": "TT - Internações",
+  "displayOption": "FitToPage",
+  "height": 180,
+  "width": 320,
+  "visibility": "HiddenInViewMode",
+  "type": "Tooltip"
+}

@@ -194,7 +194,7 @@ table _Medidas
 			VAR _pct = DIVIDE(_delta, _anterior)
 			VAR _seta = IF(_delta >= 0, "▲", "▼")
 			VAR _sinal = IF(_delta >= 0, "+", "")
-			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, "#,##0") & " vs Mesmo Período Ano Anterior"
+			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, "#,##0")
 		displayFolder: 06 Cartoes KPI Subtitulo
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000035
 
@@ -205,7 +205,7 @@ table _Medidas
 			VAR _pct = DIVIDE(_delta, _anterior)
 			VAR _seta = IF(_delta >= 0, "▲", "▼")
 			VAR _sinal = IF(_delta >= 0, "+", "")
-			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, "#,##0.0") & " vs Mesmo Período Ano Anterior"
+			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, "#,##0.0")
 		displayFolder: 06 Cartoes KPI Subtitulo
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000036
 
@@ -215,7 +215,7 @@ table _Medidas
 			VAR _delta = _atual - _anterior
 			VAR _seta = IF(_delta <= 0, "▼", "▲")
 			VAR _sinal = IF(_delta >= 0, "+", "")
-			RETURN _seta & " " & _sinal & FORMAT(_delta, "0.00%") & " p.p. | " & FORMAT(_anterior, "0.00%") & " vs Mesmo Período Ano Anterior"
+			RETURN _seta & " " & _sinal & FORMAT(_delta, "0.00%") & " p.p. | " & FORMAT(_anterior, "0.00%")
 		displayFolder: 06 Cartoes KPI Subtitulo
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000037
 
@@ -226,7 +226,7 @@ table _Medidas
 			VAR _pct = DIVIDE(_delta, _anterior)
 			VAR _seta = IF(_delta <= 0, "▼", "▲")
 			VAR _sinal = IF(_delta >= 0, "+", "")
-			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, """R$ ""#,##0.00") & " vs Mesmo Período Ano Anterior"
+			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, """R$ ""#,##0.00")
 		displayFolder: 06 Cartoes KPI Subtitulo
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000038
 
@@ -237,7 +237,7 @@ table _Medidas
 			VAR _pct = DIVIDE(_delta, _anterior)
 			VAR _seta = IF(_delta >= 0, "▲", "▼")
 			VAR _sinal = IF(_delta >= 0, "+", "")
-			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, """R$ ""#,##0") & " vs Mesmo Período Ano Anterior"
+			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, """R$ ""#,##0")
 		displayFolder: 06 Cartoes KPI Subtitulo
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000039
 
@@ -248,7 +248,7 @@ table _Medidas
 			VAR _pct = DIVIDE(_delta, _anterior)
 			VAR _seta = IF(_delta <= 0, "▼", "▲")
 			VAR _sinal = IF(_delta >= 0, "+", "")
-			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, "0.0") & " dias vs Mesmo Período Ano Anterior"
+			RETURN _seta & " " & _sinal & FORMAT(_pct, "0.0%") & " | " & FORMAT(_anterior, "0.0")
 		displayFolder: 06 Cartoes KPI Subtitulo
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000040
 
@@ -258,15 +258,19 @@ table _Medidas
 			VAR _delta = _atual - _anterior
 			VAR _seta = IF(_delta >= 0, "▲", "▼")
 			VAR _sinal = IF(_delta >= 0, "+", "")
-			RETURN _seta & " " & _sinal & FORMAT(_delta, "0.00%") & " p.p. | " & FORMAT(_anterior, "0.00%") & " vs Mesmo Período Ano Anterior"
+			RETURN _seta & " " & _sinal & FORMAT(_delta, "0.00%") & " p.p. | " & FORMAT(_anterior, "0.00%")
 		displayFolder: 06 Cartoes KPI Subtitulo
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000041
 
-	measure 'KPI K01 Internações Color' = "#0E7C7B"
+	measure 'KPI K01 Internações Color' =
+			VAR _delta = [Total Internações] - [Internações Período Anterior]
+			RETURN SWITCH(TRUE(), _delta < 0, "#0E7C7B", _delta > 0, "#C7185A", "#666666")
 		displayFolder: 07 Cartoes KPI Cor
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000042
 
-	measure 'KPI K03 Volume Mensal Color' = "#0E7C7B"
+	measure 'KPI K03 Volume Mensal Color' =
+			VAR _delta = [Volume Médio Mensal] - [Volume Médio Período Anterior]
+			RETURN SWITCH(TRUE(), _delta < 0, "#0E7C7B", _delta > 0, "#C7185A", "#666666")
 		displayFolder: 07 Cartoes KPI Cor
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000043
 
@@ -292,7 +296,9 @@ table _Medidas
 		displayFolder: 07 Cartoes KPI Cor
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000047
 
-	measure 'KPI K14 Uso UTI Color' = "#0E7C7B"
+	measure 'KPI K14 Uso UTI Color' =
+			VAR _delta = [Taxa de Uso de UTI %] - [Uso UTI Período Anterior %]
+			RETURN SWITCH(TRUE(), _delta < 0, "#0E7C7B", _delta > 0, "#C7185A", "#666666")
 		displayFolder: 07 Cartoes KPI Cor
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000048
 

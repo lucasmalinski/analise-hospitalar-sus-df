@@ -3,6 +3,7 @@
 > Painel analítico do desempenho da rede hospitalar do SUS no Distrito Federal entre 2022 e 2025, construído como instrumento de vigilância qualificada para o **Conselho de Saúde do Distrito Federal (CSDF)**.
 
 **Projeto final da disciplina Business Intelligence II — CEUB.**
+
 **Autores:** Erick Cardoso Mendes · Lucas Patriota Malinsk da Silva Pinto
 
 ---

@@ -9,6 +9,15 @@
         "page": "2.3.1"
       },
       "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Hospital_SUS-DF___CSDF9504279152320142.json",
+      "reportVersionAtImport": {
+        "visual": "2.9.0",
+        "report": "3.3.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
     }
   },
   "filterConfig": {
@@ -125,6 +134,47 @@
           "name": "CY26SU05",
           "path": "BaseThemes/CY26SU05.json",
           "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "ChatGPT_Image_16_de_jun._de_204407841782878352.png",
+          "path": "ChatGPT_Image_16_de_jun._de_204407841782878352.png",
+          "type": "Image"
+        },
+        {
+          "name": "ChatGPT_Image_16_de_jun._de_209023692540495963.png",
+          "path": "ChatGPT_Image_16_de_jun._de_209023692540495963.png",
+          "type": "Image"
+        },
+        {
+          "name": "Gov.br_logo6539686986130145.svg",
+          "path": "Gov.br_logo6539686986130145.svg",
+          "type": "Image"
+        },
+        {
+          "name": "Hospital_SUS-DF___CSDF9504279152320142.json",
+          "path": "Hospital_SUS-DF___CSDF9504279152320142.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "iges-df_5008345444516852084.png",
+          "path": "iges-df_5008345444516852084.png",
+          "type": "Image"
+        },
+        {
+          "name": "MS-GOV7509061173435507.png",
+          "path": "MS-GOV7509061173435507.png",
+          "type": "Image"
+        },
+        {
+          "name": "sus-sistema-unico-de-saude-51219058656236258475.png",
+          "path": "sus-sistema-unico-de-saude-51219058656236258475.png",
+          "type": "Image"
         }
       ]
     }

@@ -3,7 +3,5 @@ role 'Camara Tecnica Regional - Centro-Sul'
 
 	tablePermission dim_estabelecimento = 'dim_estabelecimento'[Região de Saúde] = "Região Centro-Sul"
 
-	tablePermission CaminhoBase
-
 	annotation PBI_Id = ab81d110f19c41e09bc831e634dc94de
 

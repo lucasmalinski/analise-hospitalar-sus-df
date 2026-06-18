@@ -5,157 +5,6 @@ cultureInfo en-GB
 			  "Version": "4.1.0",
 			  "Language": "en-US",
 			  "Entities": {
-			    "caminho_base": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "CaminhoBase"
-			        }
-			      },
-			      "State": "Generated",
-			      "Visibility": {
-			        "Value": "Hidden"
-			      },
-			      "Terms": [
-			        {
-			          "caminho base": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "CaminhoBase": {
-			            "Type": "Noun",
-			            "State": "Generated",
-			            "Weight": 0.99
-			          }
-			        },
-			        {
-			          "caminho headquarters": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.461
-			          }
-			        },
-			        {
-			          "caminho center": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.461
-			          }
-			        },
-			        {
-			          "caminho seat": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.461
-			          }
-			        },
-			        {
-			          "caminho station": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.461
-			          }
-			        },
-			        {
-			          "caminho pier": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.451
-			          }
-			        }
-			      ]
-			    },
-			    "caminho_base.caminho_base": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "CaminhoBase",
-			          "ConceptualProperty": "CaminhoBase"
-			        }
-			      },
-			      "State": "Generated",
-			      "Visibility": {
-			        "Value": "Hidden"
-			      },
-			      "Terms": [
-			        {
-			          "caminho base": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "CaminhoBase": {
-			            "Type": "Noun",
-			            "State": "Generated",
-			            "Weight": 0.99
-			          }
-			        },
-			        {
-			          "caminho headquarters": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.461
-			          }
-			        },
-			        {
-			          "caminho center": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.461
-			          }
-			        },
-			        {
-			          "caminho seat": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.461
-			          }
-			        },
-			        {
-			          "caminho station": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.461
-			          }
-			        },
-			        {
-			          "caminho pier": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.451
-			          }
-			        }
-			      ]
-			    },
 			    "fato_atendimento": {
 			      "Definition": {
 			        "Binding": {
@@ -4722,7 +4571,7 @@ cultureInfo en-GB
 			    "caminho_base1": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "Caminho Base"
+			          "ConceptualEntity": "URL Base"
 			        }
 			      },
 			      "State": "Generated",
@@ -4790,7 +4639,7 @@ cultureInfo en-GB
 			    "caminho_base.caminho_base1": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "Caminho Base",
+			          "ConceptualEntity": "URL Base",
 			          "ConceptualProperty": "Caminho Base"
 			        }
 			      },

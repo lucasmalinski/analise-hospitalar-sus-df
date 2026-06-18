@@ -1,4 +1,4 @@
-table 'Caminho Base'
+table 'URL Base'
 	isHidden
 	lineageTag: 904619ff-0042-44ca-a336-3c0a0ead8dc9
 
@@ -13,9 +13,9 @@ table 'Caminho Base'
 
 		annotation SummarizationSetBy = Automatic
 
-	partition 'Caminho Base' = m
+	partition 'URL Base' = m
 		mode: import
-		source = "C:\Users\hulkd\OneDrive\Documents\Docs estudo\Ceub\Bussines Inteligence\Projeto Final\analise-hospitalar-sus-df\data\concat\dados_concatenados.csv" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+		source = "https://saudedf.dfs.core.windows.net/dadospublicos/dados_concatenados.parquet" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
 
 	changedProperty = IsHidden
 

@@ -8,11 +8,10 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["CaminhoBase","fato_atendimento","dim_data","dim_estabelecimento","dim_procedimento","dim_diagnostico","dim_municipio_residencia","dim_ra_residencia","dim_detalhes","_Medidas","Caminho Base"]
+annotation PBI_QueryOrder = ["fato_atendimento","dim_data","dim_estabelecimento","dim_procedimento","dim_diagnostico","dim_municipio_residencia","dim_ra_residencia","dim_detalhes","_Medidas","URL Base"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
-ref table CaminhoBase
 ref table fato_atendimento
 ref table dim_data
 ref table dim_estabelecimento
@@ -22,7 +21,7 @@ ref table dim_ra_residencia
 ref table dim_detalhes
 ref table dim_diagnostico
 ref table _Medidas
-ref table 'Caminho Base'
+ref table 'URL Base'
 
 ref role 'Presidente / Mesa Diretora CSDF'
 ref role 'Camara Tecnica Regional - Central'

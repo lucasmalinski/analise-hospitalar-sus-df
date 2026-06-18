@@ -30,11 +30,15 @@ BASE_URL = (
     "&parto=disable&cirurgia=disable&obito=disable"
 )
 
-# Configuracao do Azure (lida das variaveis de ambiente do GitHub Actions)
-AZURE_ACCOUNT_NAME = os.getenv("AZURE_STORAGE_ACCOUNT_NAME")
-AZURE_ACCOUNT_KEY = os.getenv("AZURE_STORAGE_ACCOUNT_KEY")
-CONTAINER_NAME = "dados-publicos"
+# Configuracao do Azure vinda das variaveis de ambiente
+_az_name = os.getenv("AZURE_STORAGE_ACCOUNT_NAME")
+_az_key = os.getenv("AZURE_STORAGE_ACCOUNT_KEY")
+_az_container = os.getenv("AZURE_STORAGE_CONTAINER_NAME")
 
+# Garantia contra \r do Windows em .env
+AZURE_ACCOUNT_NAME = _az_name.strip() if _az_name else None
+AZURE_ACCOUNT_KEY = _az_key.strip() if _az_key else None
+CONTAINER_NAME = _az_container.strip() if _az_container else None
 # Etapas ---------------------------------------------------------------------
 
 def baixar_ano(ano: int) -> Path | None:
@@ -120,10 +124,14 @@ def concatenar() -> None:
 
 def main() -> None:
     """Executa o pipeline completo: cria pastas, baixa por ano, concatena."""
-    print("Pipeline ingestao SUS-DF")
+    print("Pipeline ingestão SUS-DF")
     print(f"  raiz   : {PROJECT_ROOT}")
     print(f"  raw    : {RAW_DIR.relative_to(PROJECT_ROOT)}/dados_YYYY.csv")
     print(f"  concat : {CONCAT_FILE.relative_to(PROJECT_ROOT)}")
+    if AZURE_ACCOUNT_NAME and AZURE_ACCOUNT_KEY and CONTAINER_NAME:
+        print(f"  azure  : variáveis de conexão azure configuradas")
+    else: 
+        print(f"  azure  : variáveis de conexão azure não configuradas")
 
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     CONCAT_DIR.mkdir(parents=True, exist_ok=True)
@@ -132,7 +140,7 @@ def main() -> None:
     for ano in YEAR_RANGE:
         baixar_ano(ano)
 
-    print("\n[2/2] Consolidacao:")
+    print("\n[2/2] Consolidacao e Upload (Se Habilitado):")
     concatenar()
 
     print("\nDone.")

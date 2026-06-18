@@ -1,7 +1,7 @@
 """Pipeline de ingestao SUS-DF.
 
 Baixa as bases anuais de AIH via API publica saude-DF (2022-2026),
-salva cada ano em `data/raw/dados_YYYY.csv` e gera o consolidado.
+salva cada ano em `data/raw/dados_YYYY.csv` e gera o consolidado em Parquet.
 Se configurado com credenciais, envia o resultado para o Azure Blob Storage.
 
 Execucao:
@@ -20,7 +20,7 @@ import requests
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 RAW_DIR = PROJECT_ROOT / "data" / "raw"
 CONCAT_DIR = PROJECT_ROOT / "data" / "concat"
-CONCAT_FILE = CONCAT_DIR / "dados_concatenados.csv"
+CONCAT_FILE = CONCAT_DIR / "dados_concatenados.parquet"
 
 YEAR_RANGE = range(2022, 2027)  # inclusive 2022..2026
 
@@ -30,7 +30,7 @@ BASE_URL = (
     "&parto=disable&cirurgia=disable&obito=disable"
 )
 
-# Configuracao do Azure vinda das variaveis de ambiente
+# Configuracao do Azure das variaveis de ambiente
 _az_name = os.getenv("AZURE_STORAGE_ACCOUNT_NAME")
 _az_key = os.getenv("AZURE_STORAGE_ACCOUNT_KEY")
 _az_container = os.getenv("AZURE_STORAGE_CONTAINER_NAME")
@@ -39,6 +39,7 @@ _az_container = os.getenv("AZURE_STORAGE_CONTAINER_NAME")
 AZURE_ACCOUNT_NAME = _az_name.strip() if _az_name else None
 AZURE_ACCOUNT_KEY = _az_key.strip() if _az_key else None
 CONTAINER_NAME = _az_container.strip() if _az_container else None
+
 # Etapas ---------------------------------------------------------------------
 
 def baixar_ano(ano: int) -> Path | None:
@@ -70,7 +71,7 @@ def baixar_ano(ano: int) -> Path | None:
         return None
 
 def concatenar() -> None:
-    """Le todos os CSVs anuais, grava localmente e envia para o Azure."""
+    """Le todos os CSVs anuais, grava localmente e envia para o Azure em formato Parquet."""
     csv_files = sorted(
         str(p)
         for p in RAW_DIR.glob("dados_????.csv")
@@ -95,8 +96,8 @@ def concatenar() -> None:
     try:
         combined = pd.concat(dfs, ignore_index=True)
         
-        # 1. Salva localmente (bom para testar no seu próprio PC)
-        combined.to_csv(CONCAT_FILE, index=False)
+        # 1. Salva localmente em PARQUET
+        combined.to_parquet(CONCAT_FILE, index=False, engine='pyarrow')
         rel = CONCAT_FILE.relative_to(PROJECT_ROOT)
         print(f"  [ok]   {len(dfs)} arquivos consolidados em {rel} ({len(combined):,} linhas)")
 
@@ -107,11 +108,16 @@ def concatenar() -> None:
                 "account_name": AZURE_ACCOUNT_NAME,
                 "account_key": AZURE_ACCOUNT_KEY
             }
-            azure_path = f"az://{CONTAINER_NAME}/dados_concatenados.csv"
             
-            combined.to_csv(azure_path, storage_options=storage_options, index=False)
+            azure_path = (
+                f"abfss://{CONTAINER_NAME}"
+                f"@{AZURE_ACCOUNT_NAME}.dfs.core.windows.net"
+                f"/dados_concatenados.parquet"
+            )
             
-            public_url = f"https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{CONTAINER_NAME}/dados_concatenados.csv"
+            combined.to_parquet(azure_path, storage_options=storage_options, index=False, engine='pyarrow')
+            
+            public_url = f"https://{AZURE_ACCOUNT_NAME}.dfs.core.windows.net/{CONTAINER_NAME}/dados_concatenados.parquet"
             print(f"  [ok]   Upload concluído!")
             print(f"  [url]  Público em: {public_url}")
         else:
@@ -142,7 +148,7 @@ def main() -> None:
 
     print("\n[2/2] Consolidacao e Upload (Se Habilitado):")
     concatenar()
-
+    
     print("\nDone.")
 
 if __name__ == "__main__":

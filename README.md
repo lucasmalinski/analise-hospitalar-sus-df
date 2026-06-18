@@ -1,7 +1,7 @@
 # Análise Hospitalar SUS-DF
 
 [![Status da Ingestão](https://github.com/lucasmalinski/analise-hospitalar-sus-df/actions/workflows/ingest.yml/badge.svg)](https://github.com/lucasmalinski/analise-hospitalar-sus-df/actions/workflows/ingest.yml)
-[![Data Lake (Azure)](https://img.shields.io/website?url=https%3A%2F%2Fanalisesus.blob.core.windows.net%2Fdados-publicos%2Fdados_concatenados.csv&label=Data%20Lake%20(Azure)&up_message=online&down_message=offline&color=blue)](https://analisesus.blob.core.windows.net/dados-publicos/dados_concatenados.csv)
+[![Data Lake (Azure)](https://img.shields.io/website?url=https%3A%2F%2Fsaudedf.blob.core.windows.net%2Fdadospublicos%2Fdados_concatenados.parquet&label=Data%20Lake%20(Azure)&up_message=online&down_message=offline&color=blue)](https://saudedf.blob.core.windows.net/dadospublicos/dados_concatenados.parquet)
 
 > Painel analítico do desempenho da rede hospitalar do SUS no Distrito Federal entre 2022 e 2025, construído como instrumento de vigilância qualificada para o **Conselho de Saúde do Distrito Federal (CSDF)**.
 > O projeto implementa para a infraestrutura de dados um pipeline de ETL idempotente em Python que consome a API da Saúde-DF, orquestrado via GitHub Actions, com armazenamento centralizado em Azure Blob Storage para consumo otimizado via Power BI.

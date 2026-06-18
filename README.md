@@ -4,6 +4,7 @@
 [![Data Lake (Azure)](https://img.shields.io/website?url=https%3A%2F%2Fanalisesus.blob.core.windows.net%2Fdados-publicos%2Fdados_concatenados.csv&label=Data%20Lake%20(Azure)&up_message=online&down_message=offline&color=blue)](https://analisesus.blob.core.windows.net/dados-publicos/dados_concatenados.csv)
 
 > Painel analítico do desempenho da rede hospitalar do SUS no Distrito Federal entre 2022 e 2025, construído como instrumento de vigilância qualificada para o **Conselho de Saúde do Distrito Federal (CSDF)**.
+> O projeto implementa para a infraestrutura de dados um pipeline de ETL idempotente em Python que consome a API da Saúde-DF, orquestrado via GitHub Actions, com armazenamento centralizado em Azure Blob Storage para consumo otimizado via Power BI.
 
 **Projeto final da disciplina Business Intelligence II — CEUB.**
 **Autores:** Erick Cardoso Mendes · Lucas Patriota Malinsk da Silva Pinto

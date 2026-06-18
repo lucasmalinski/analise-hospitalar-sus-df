@@ -16,13 +16,13 @@ A partir da raiz do projeto, os arquivos gerados são salvos em:
     │   ├── dados_2025.csv
     │   └── dados_2026.csv
     └── concat/
-        └── dados_concatenados.csv    # arquivo carregado no Azure Blob
+        └── dados_concatenados.parquet    # arquivo carregado no Azure Blob
 ```
 
 > A pasta `data/` está ignorada pelo Git — os CSVs ficam só no disco local de cada colaborador.
 > Quando `ingestion/main.py` é executada pelo runner do Github Actions, os dados de todos os anos serão baixados, já que o ambiente não possui persistência.
 > Na nuvem, o arquivo final consolidado fica disponível publicamente em:
-`https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/${AZURE_CONTAINER}/dados_concatenados.csv`
+`https://${AZURE_STORAGE_ACCOUNT}.dfs.core.windows.net/${AZURE_CONTAINER}/dados_concatenados.parquet`
 
 ## Pré-requisitos para execução local
 
@@ -77,11 +77,11 @@ uv run --env-file .env main.py
 Pipeline ingestao SUS-DF
   raiz   : <...>/analise-hospitalar-sus-df
   raw    : data/raw/dados_YYYY.csv
-  concat : data/concat/dados_concatenados.csv
+  concat : data/concat/dados_concatenados.parquet
 
 [1/2] Download por ano:
   [get]  2022: baixando...
-  [ok]   2022: salvo em data/raw/dados_2022.csv
+  [ok]   2022: salvo em data/raw/dados_2022.parquet
   [skip] 2023: arquivo ja existe
   ...
 
@@ -89,7 +89,7 @@ Pipeline ingestao SUS-DF
   [ok]   5 arquivos consolidados em data/concat/dados_concatenados.csv (985,220 linhas)
   [upload] Enviando consolidado para o Azure Blob Storage...
   [ok]   Upload concluído!
-  [url]  Público em: https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/${AZURE_CONTAINER}/dados_concatenados.csv
+  [url]  Público em: https://${AZURE_STORAGE_ACCOUNT}.dfs.core.windows.net/${AZURE_CONTAINER}/dados_concatenados.parquet
 
 Done.
 ```

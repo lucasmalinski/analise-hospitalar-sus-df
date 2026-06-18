@@ -4,3 +4,4 @@ data/raw
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
 docs/PLANO_DE_ACAO.md
+.env

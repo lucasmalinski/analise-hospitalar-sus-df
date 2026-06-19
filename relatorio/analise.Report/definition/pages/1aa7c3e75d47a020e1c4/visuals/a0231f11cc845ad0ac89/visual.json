@@ -1,0 +1,132 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "a0231f11cc845ad0ac89",
+  "position": {
+    "x": 14.187192118226601,
+    "y": 542.66009852216746,
+    "z": 27000,
+    "height": 86.896551724137936,
+    "width": 850.34482758620686,
+    "tabOrder": 27000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Em 4 anos (2022-25), a alta complexidade cresceu "
+                  },
+                  {
+                    "value": "+38%",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " vs. "
+                  },
+                  {
+                    "value": "+6,8%",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " do total. "
+                  },
+                  {
+                    "value": "Agosto",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " persiste como pico mesmo neste recorte, um sinal de "
+                  },
+                  {
+                    "value": "sazonalidade epidemiológica",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " (não administrativa)."
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Obstetrícia: rebote pós-pandêmico.",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " 2022 marcou o pico de 4 anos (43.296 internações), reflexo do represamento de partos e cirurgias eletivas contidos durante a COVID-19. O volume cai progressivamente até 2024 (−7,7%), com leve retomada em 2025. A queda não significa menos demanda obstétrica — em paralelo, dados nacionais apontam taxa de cesárea próxima a 56% e aumento de gestações de alto risco por comorbidades (hipertensão, diabetes), o que mantém a especialidade entre as mais sensíveis a choques de demanda e exige monitoramento contínuo da capacidade instalada."
+                  }
+                ],
+                "listType": "bullet"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

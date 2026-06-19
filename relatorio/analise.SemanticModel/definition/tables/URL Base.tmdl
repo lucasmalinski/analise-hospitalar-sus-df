@@ -2,14 +2,11 @@ table 'URL Base'
 	isHidden
 	lineageTag: 904619ff-0042-44ca-a336-3c0a0ead8dc9
 
-	column 'Caminho Base'
+	column 'URL Base'
 		dataType: string
-		isHidden
-		lineageTag: 39044233-4676-49de-9c59-4a244ceb7aa5
+		lineageTag: d2988c04-a37e-4b3d-85b4-c719f68efe3d
 		summarizeBy: none
-		sourceColumn: Caminho Base
-
-		changedProperty = IsHidden
+		sourceColumn: URL Base
 
 		annotation SummarizationSetBy = Automatic
 

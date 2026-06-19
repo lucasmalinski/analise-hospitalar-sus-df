@@ -323,6 +323,100 @@ table _Medidas
 		displayFolder: 08 Velocimetro Mortalidade
 		lineageTag: 33333333-aaaa-bbbb-cccc-000000000052
 
+	measure 'Mês de Pico' = ```
+			
+					VAR _MediaPorMes =
+					    ADDCOLUMNS(
+					        VALUES(dim_data[Nome Mês]),
+					        "@MediaMensal",
+					            AVERAGEX(
+					                FILTER(
+					                    VALUES(dim_data[Ano]),
+					                    [Total Internações] > 0
+					                ),
+					                [Total Internações]
+					            )
+					    )
+					RETURN
+					    CONCATENATEX(
+					        TOPN(1, _MediaPorMes, [@MediaMensal], DESC),
+					        dim_data[Nome Mês]
+					    )
+			```
+		displayFolder: 09 Sazonalidade
+		lineageTag: e151f4c2-8e69-4b71-9240-0c9c24507f69
+
+	measure 'Internações Mês de Pico' =
+			
+			MAXX(
+				SUMMARIZE(dim_data, dim_data[Nome Mês], "@Int", [Total Internações]),
+				[@Int]
+			)
+		displayFolder: 09 Sazonalidade
+		lineageTag: f9ed2874-1713-4a3b-8add-fee91adfc160
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Internações Masculino' = CALCULATE([Total Internações], dim_detalhes[Sexo] = "Masculino")
+		formatString: #,0
+		displayFolder: 02 Filtros CALCULATE
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000055
+
+	measure 'Internações Feminino' = CALCULATE([Total Internações], dim_detalhes[Sexo] = "Feminino")
+		formatString: #,0
+		displayFolder: 02 Filtros CALCULATE
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000056
+
+	measure 'Internações Masculino (Negativo)' = -[Internações Masculino]
+		displayFolder: 10 Pirâmide
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000057
+
+		formatStringDefinition = "#,##0 ; #,##0 ; 0"
+
+	measure 'KPI Mortalidade Infantil Subtitle' =
+			
+			VAR _atual = [Mortalidade Infantil 0-1 %]
+			VAR _geral = [Taxa de Mortalidade %]
+			VAR _delta = _atual - _geral
+			VAR _seta = IF(_delta > 0, "▲", IF(_delta < 0, "▼", "■"))
+			VAR _sinal = IF(_delta >= 0, "+", "")
+			RETURN _seta & " " & _sinal & FORMAT(_delta, "0.00%") & " p.p."
+		displayFolder: 06 Cartoes KPI Subtitulo
+		lineageTag: 165ae56f-b9a3-4cbe-ae56-1557686bf4b8
+
+	measure 'KPI Mortalidade Idosos Subtitle' =
+			
+			VAR _atual = [Mortalidade Idosos 60+ %]
+			VAR _geral = [Taxa de Mortalidade %]
+			VAR _delta = _atual - _geral
+			VAR _seta = IF(_delta > 0, "▲", IF(_delta < 0, "▼", "■"))
+			VAR _sinal = IF(_delta >= 0, "+", "")
+			RETURN _seta & " " & _sinal & FORMAT(_delta, "0.00%") & "p.p."
+		displayFolder: 06 Cartoes KPI Subtitulo
+		lineageTag: 7607297e-63b2-440b-8713-b317a39c4ca1
+
+	measure 'KPI Mortalidade Idosos Color' =
+			VAR _delta = [Mortalidade Idosos 60+ %] - [Taxa de Mortalidade %]
+			RETURN SWITCH(TRUE(), _delta < 0, "#0E7C7B", _delta > 0, "#C7185A", "#666666")
+		displayFolder: 07 Cartoes KPI Cor
+		lineageTag: 9d2c1476-9403-4cc9-a8b5-2465b9969584
+
+	measure 'KPI Mortalidade Infantil Color' =
+			VAR _delta = [Mortalidade Infantil 0-1 %] - [Taxa de Mortalidade %]
+			RETURN SWITCH(TRUE(), _delta < 0, "#0E7C7B", _delta > 0, "#C7185A", "#666666")
+		displayFolder: 07 Cartoes KPI Cor
+		lineageTag: e57865e7-def3-46f6-b9fc-61f157981dd0
+
+	measure 'Internações Fora DF' = CALCULATE([Total Internações], dim_municipio_residencia[UF de Residência] <> "DF")
+		formatString: #,0
+		displayFolder: 02 Filtros CALCULATE
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000058
+
+	measure '% Internações Fora DF' = DIVIDE([Internações Fora DF], [Total Internações])
+		formatString: 0.00%
+		displayFolder: 03 Taxas KPIs
+		lineageTag: 33333333-aaaa-bbbb-cccc-000000000059
+
 	column Placeholder
 		dataType: string
 		isHidden

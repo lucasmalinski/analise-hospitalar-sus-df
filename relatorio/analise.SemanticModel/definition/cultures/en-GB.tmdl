@@ -2405,6 +2405,16 @@ cultureInfo en-GB
 			            },
 			            "Weight": 0.9
 			          }
+			        },
+			        {
+			          "Custo por Internação": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -2424,6 +2434,16 @@ cultureInfo en-GB
 			        },
 			        {
 			          "Tempo de Permanência": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Tempo Permanência": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -2493,6 +2513,16 @@ cultureInfo en-GB
 			            },
 			            "Weight": 0.748
 			          }
+			        },
+			        {
+			          "Cobertura RA Mapeada": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -2528,6 +2558,16 @@ cultureInfo en-GB
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.739
+			          }
+			        },
+			        {
+			          "Concentração Top-3": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -2706,6 +2746,16 @@ cultureInfo en-GB
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.573
+			          }
+			        },
+			        {
+			          "Valor Investido YTD": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -4568,7 +4618,7 @@ cultureInfo en-GB
 			        }
 			      ]
 			    },
-			    "caminho_base1": {
+			    "URL_base": {
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "URL Base"
@@ -4580,12 +4630,48 @@ cultureInfo en-GB
 			      },
 			      "Terms": [
 			        {
-			          "caminho base": {
+			          "URL base": {
 			            "State": "Generated"
 			          }
 			        },
 			        {
-			          "caminho headquarters": {
+			          "base": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "website base": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "site base": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "web address base": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.471
+			          }
+			        },
+			        {
+			          "url headquarters": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
@@ -4595,7 +4681,7 @@ cultureInfo en-GB
 			          }
 			        },
 			        {
-			          "caminho center": {
+			          "url center": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
@@ -4605,7 +4691,7 @@ cultureInfo en-GB
 			          }
 			        },
 			        {
-			          "caminho seat": {
+			          "url seat": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
@@ -4615,7 +4701,7 @@ cultureInfo en-GB
 			          }
 			        },
 			        {
-			          "caminho station": {
+			          "url station": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
@@ -4625,22 +4711,74 @@ cultureInfo en-GB
 			          }
 			        },
 			        {
-			          "caminho pier": {
+			          "headquarters": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.451
+			            "Weight": 0.452
+			          }
+			        },
+			        {
+			          "center": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.452
+			          }
+			        },
+			        {
+			          "seat": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.452
 			          }
 			        }
 			      ]
 			    },
-			    "caminho_base.caminho_base1": {
+			    "entity__medida.mês_de_pico": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Mês de Pico"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "mês de pico": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "entity__medida.internações_mês_de_pico": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Internações Mês de Pico"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "internações mês de pico": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "URL_base.URL_base": {
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "URL Base",
-			          "ConceptualProperty": "Caminho Base"
+			          "ConceptualProperty": "URL Base"
 			        }
 			      },
 			      "State": "Generated",
@@ -4649,12 +4787,48 @@ cultureInfo en-GB
 			      },
 			      "Terms": [
 			        {
-			          "caminho base": {
+			          "URL base": {
 			            "State": "Generated"
 			          }
 			        },
 			        {
-			          "caminho headquarters": {
+			          "base": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "website base": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "site base": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "web address base": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.471
+			          }
+			        },
+			        {
+			          "url headquarters": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
@@ -4664,7 +4838,7 @@ cultureInfo en-GB
 			          }
 			        },
 			        {
-			          "caminho center": {
+			          "url center": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
@@ -4674,7 +4848,7 @@ cultureInfo en-GB
 			          }
 			        },
 			        {
-			          "caminho seat": {
+			          "url seat": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
@@ -4684,7 +4858,7 @@ cultureInfo en-GB
 			          }
 			        },
 			        {
-			          "caminho station": {
+			          "url station": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
@@ -4694,13 +4868,562 @@ cultureInfo en-GB
 			          }
 			        },
 			        {
-			          "caminho pier": {
+			          "headquarters": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.451
+			            "Weight": 0.452
+			          }
+			        },
+			        {
+			          "center": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.452
+			          }
+			        },
+			        {
+			          "seat": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.452
+			          }
+			        }
+			      ]
+			    },
+			    "entity__medida.internações_masculino": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Internações Masculino"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "internações masculino": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "entity__medida.internações_feminino": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Internações Feminino"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "internações feminino": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Feminino": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "entity__medida.internações_masculino_negativo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Internações Masculino (Negativo)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "internações masculino (negativo)": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "internações masculino": {
+			            "State": "Generated",
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "Masculino": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "entity__medida.KPI_mortalidade_infantil_subtitle": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "KPI Mortalidade Infantil Subtitle"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "KPI mortalidade infantil subtitle": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil slogan": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil description": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil legend": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil header": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil footer": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil surtitle": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil supertitle": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil caption": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil title": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil heading": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        }
+			      ]
+			    },
+			    "entity__medida.KPI_mortalidade_idosos_subtitle": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "KPI Mortalidade Idosos Subtitle"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "KPI mortalidade idosos subtitle": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso slogan": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso description": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso legend": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso header": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso footer": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso surtitle": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso supertitle": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso caption": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso title": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso heading": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        }
+			      ]
+			    },
+			    "entity__medida.KPI_mortalidade_idosos_color": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "KPI Mortalidade Idosos Color"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "KPI mortalidade idosos color": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso hue": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso tint": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso shade": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso dye": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso paint": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade idoso pigment": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        }
+			      ]
+			    },
+			    "entity__medida.KPI_mortalidade_infantil_color": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "KPI Mortalidade Infantil Color"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "KPI mortalidade infantil color": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil hue": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil tint": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil shade": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil dye": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil paint": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "kpi mortalidade infantil pigment": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        }
+			      ]
+			    },
+			    "entity__medida.entity__internações_masculino_negativo_FormatString": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "_Internações Masculino (Negativo) FormatString"
+			        }
+			      },
+			      "State": "Generated",
+			      "Visibility": {
+			        "Value": "Hidden"
+			      },
+			      "Terms": [
+			        {
+			          "_internações masculino (negativo) FormatString": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "entity__medida.internações_fora_DF": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "Internações Fora DF"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "internações fora DF": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "entity__medida.internações_fora_DF1": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Medidas",
+			          "ConceptualProperty": "% Internações Fora DF"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% internações fora DF": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "percentage internaçõe forum df": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "pct internaçõe forum df": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
 			          }
 			        }
 			      ]
@@ -5040,6 +5763,402 @@ cultureInfo en-GB
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "dim_detalhes_have_fato_atendimentos"
+			        }
+			      ]
+			    },
+			    "fato_atendimento_has_entity__medida_internações_fora_DF1": {
+			      "Binding": {
+			        "ConceptualEntity": "fato_atendimento"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fato_atendimento": {
+			          "Target": {
+			            "Entity": "fato_atendimento"
+			          }
+			        },
+			        "entity__medida.internações_fora_DF1": {
+			          "Target": {
+			            "Entity": "entity__medida.internações_fora_DF1"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fato_atendimento"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.internações_fora_DF1"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fato_atendimentos_have__internações_fora_DF"
+			        }
+			      ]
+			    },
+			    "fato_atendimento_has_entity__medida_internações_fora_DF": {
+			      "Binding": {
+			        "ConceptualEntity": "fato_atendimento"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fato_atendimento": {
+			          "Target": {
+			            "Entity": "fato_atendimento"
+			          }
+			        },
+			        "entity__medida.internações_fora_DF": {
+			          "Target": {
+			            "Entity": "entity__medida.internações_fora_DF"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fato_atendimento"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.internações_fora_DF"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fato_atendimentos_have_internações_fora_DF"
+			        }
+			      ]
+			    },
+			    "fato_atendimento_has_entity__medida_KPI_mortalidade_infantil_color": {
+			      "Binding": {
+			        "ConceptualEntity": "fato_atendimento"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fato_atendimento": {
+			          "Target": {
+			            "Entity": "fato_atendimento"
+			          }
+			        },
+			        "entity__medida.KPI_mortalidade_infantil_color": {
+			          "Target": {
+			            "Entity": "entity__medida.KPI_mortalidade_infantil_color"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fato_atendimento"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.KPI_mortalidade_infantil_color"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fato_atendimentos_have_KPI_mortalidade_infantil_color"
+			        }
+			      ]
+			    },
+			    "fato_atendimento_has_entity__medida_KPI_mortalidade_idosos_color": {
+			      "Binding": {
+			        "ConceptualEntity": "fato_atendimento"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fato_atendimento": {
+			          "Target": {
+			            "Entity": "fato_atendimento"
+			          }
+			        },
+			        "entity__medida.KPI_mortalidade_idosos_color": {
+			          "Target": {
+			            "Entity": "entity__medida.KPI_mortalidade_idosos_color"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fato_atendimento"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.KPI_mortalidade_idosos_color"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fato_atendimentos_have_KPI_mortalidade_idosos_color"
+			        }
+			      ]
+			    },
+			    "fato_atendimento_has_entity__medida_KPI_mortalidade_idosos_subtitle": {
+			      "Binding": {
+			        "ConceptualEntity": "fato_atendimento"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fato_atendimento": {
+			          "Target": {
+			            "Entity": "fato_atendimento"
+			          }
+			        },
+			        "entity__medida.KPI_mortalidade_idosos_subtitle": {
+			          "Target": {
+			            "Entity": "entity__medida.KPI_mortalidade_idosos_subtitle"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fato_atendimento"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.KPI_mortalidade_idosos_subtitle"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fato_atendimentos_have_KPI_mortalidade_idosos_subtitle"
+			        }
+			      ]
+			    },
+			    "fato_atendimento_has_entity__medida_KPI_mortalidade_infantil_subtitle": {
+			      "Binding": {
+			        "ConceptualEntity": "fato_atendimento"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fato_atendimento": {
+			          "Target": {
+			            "Entity": "fato_atendimento"
+			          }
+			        },
+			        "entity__medida.KPI_mortalidade_infantil_subtitle": {
+			          "Target": {
+			            "Entity": "entity__medida.KPI_mortalidade_infantil_subtitle"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fato_atendimento"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.KPI_mortalidade_infantil_subtitle"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fato_atendimentos_have_KPI_mortalidade_infantil_subtitle"
+			        }
+			      ]
+			    },
+			    "fato_atendimento_has_entity__medida_internações_masculino_negativo": {
+			      "Binding": {
+			        "ConceptualEntity": "fato_atendimento"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fato_atendimento": {
+			          "Target": {
+			            "Entity": "fato_atendimento"
+			          }
+			        },
+			        "entity__medida.internações_masculino_negativo": {
+			          "Target": {
+			            "Entity": "entity__medida.internações_masculino_negativo"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fato_atendimento"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.internações_masculino_negativo"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fato_atendimentos_have_internações_masculino_negativo"
+			        }
+			      ]
+			    },
+			    "fato_atendimento_has_entity__medida_internações_feminino": {
+			      "Binding": {
+			        "ConceptualEntity": "fato_atendimento"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fato_atendimento": {
+			          "Target": {
+			            "Entity": "fato_atendimento"
+			          }
+			        },
+			        "entity__medida.internações_feminino": {
+			          "Target": {
+			            "Entity": "entity__medida.internações_feminino"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fato_atendimento"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.internações_feminino"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fato_atendimentos_have_internações_feminino"
+			        }
+			      ]
+			    },
+			    "fato_atendimento_has_entity__medida_internações_masculino": {
+			      "Binding": {
+			        "ConceptualEntity": "fato_atendimento"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fato_atendimento": {
+			          "Target": {
+			            "Entity": "fato_atendimento"
+			          }
+			        },
+			        "entity__medida.internações_masculino": {
+			          "Target": {
+			            "Entity": "entity__medida.internações_masculino"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fato_atendimento"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.internações_masculino"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fato_atendimentos_have_internações_masculino"
+			        }
+			      ]
+			    },
+			    "fato_atendimento_has_entity__medida_internações_mês_de_pico": {
+			      "Binding": {
+			        "ConceptualEntity": "fato_atendimento"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "fato_atendimento": {
+			          "Target": {
+			            "Entity": "fato_atendimento"
+			          }
+			        },
+			        "entity__medida.internações_mês_de_pico": {
+			          "Target": {
+			            "Entity": "entity__medida.internações_mês_de_pico"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "fato_atendimento"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.internações_mês_de_pico"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "fato_atendimentos_have_internações_mês_de_pico"
+			        }
+			      ]
+			    },
+			    "dim_data_has_entity__medida_internações_mês_de_pico": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_data"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_data": {
+			          "Target": {
+			            "Entity": "dim_data"
+			          }
+			        },
+			        "entity__medida.internações_mês_de_pico": {
+			          "Target": {
+			            "Entity": "entity__medida.internações_mês_de_pico"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_data"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.internações_mês_de_pico"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_data_have_internações_mês_de_pico"
+			        }
+			      ]
+			    },
+			    "entity__medida_has_mês_de_pico": {
+			      "Binding": {
+			        "ConceptualEntity": "_Medidas"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "entity__medida": {
+			          "Target": {
+			            "Entity": "entity__medida"
+			          }
+			        },
+			        "entity__medida.mês_de_pico": {
+			          "Target": {
+			            "Entity": "entity__medida.mês_de_pico"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "entity__medida"
+			            },
+			            "Object": {
+			              "Role": "entity__medida.mês_de_pico"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "Phrasing_medidas_have_mês_de_pico"
 			        }
 			      ]
 			    },

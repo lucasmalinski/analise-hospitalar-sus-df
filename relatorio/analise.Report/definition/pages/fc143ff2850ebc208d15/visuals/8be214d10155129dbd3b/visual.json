@@ -181,7 +181,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'OKR1 — Taxa de Mortalidade Hospitalar'"
+                  "Value": "'Taxa de Mortalidade Hospitalar'"
                 }
               }
             },

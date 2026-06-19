@@ -1,0 +1,131 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "c648e0af09927026449e",
+  "position": {
+    "x": 716.45320197044339,
+    "y": 219.90147783251231,
+    "z": 21000,
+    "height": 421.18226600985224,
+    "width": 554.18719211822656,
+    "tabOrder": 21000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_ra_residencia"
+                    }
+                  },
+                  "Property": "RA de Residência"
+                }
+              },
+              "queryRef": "dim_ra_residencia.RA de Residência",
+              "nativeQueryRef": "RA de Residência"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Total Internações"
+                }
+              },
+              "queryRef": "_Medidas.Total Internações",
+              "nativeQueryRef": "Total Internações"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "% Var Internações YoY"
+                }
+              },
+              "queryRef": "_Medidas.% Var Internações YoY",
+              "nativeQueryRef": "% Var Internações YoY"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Custo Médio por Internação"
+                }
+              },
+              "queryRef": "_Medidas.Custo Médio por Internação",
+              "nativeQueryRef": "Custo Médio por Internação"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Taxa de Mortalidade %"
+                }
+              },
+              "queryRef": "_Medidas.Taxa de Mortalidade %",
+              "nativeQueryRef": "Taxa de Mortalidade %"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "126.852224600737D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "dim_ra_residencia.RA de Residência"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "117.2068957447182D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Medidas.Total Internações"
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

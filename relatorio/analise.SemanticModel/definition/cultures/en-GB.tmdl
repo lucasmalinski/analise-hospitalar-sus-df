@@ -5389,6 +5389,16 @@ cultureInfo en-GB
 			          "internações fora DF": {
 			            "State": "Generated"
 			          }
+			        },
+			        {
+			          "Internações (Pacientes residentes Fora do DF)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -5424,6 +5434,138 @@ cultureInfo en-GB
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.599
+			          }
+			        }
+			      ]
+			    },
+			    "dim_ra_residencia.latitude": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_ra_residencia",
+			          "ConceptualProperty": "Latitude"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "latitude": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "leeway": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "freedom": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "autonomy": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "liberty": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "opportunity": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "room": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "scope": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "space": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "rope": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "location": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        }
+			      ]
+			    },
+			    "dim_ra_residencia.longitude": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_ra_residencia",
+			          "ConceptualProperty": "Longitude"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "longitude": {
+			            "State": "Generated"
 			          }
 			        }
 			      ]
@@ -5763,6 +5905,72 @@ cultureInfo en-GB
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "dim_detalhes_have_fato_atendimentos"
+			        }
+			      ]
+			    },
+			    "dim_ra_residencia_has_longitude": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_ra_residencia"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_ra_residencia": {
+			          "Target": {
+			            "Entity": "dim_ra_residencia"
+			          }
+			        },
+			        "dim_ra_residencia.longitude": {
+			          "Target": {
+			            "Entity": "dim_ra_residencia.longitude"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_ra_residencia"
+			            },
+			            "Object": {
+			              "Role": "dim_ra_residencia.longitude"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_ra_residencias_have_longitudes"
+			        }
+			      ]
+			    },
+			    "dim_ra_residencia_has_latitude": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_ra_residencia"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_ra_residencia": {
+			          "Target": {
+			            "Entity": "dim_ra_residencia"
+			          }
+			        },
+			        "dim_ra_residencia.latitude": {
+			          "Target": {
+			            "Entity": "dim_ra_residencia.latitude"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_ra_residencia"
+			            },
+			            "Object": {
+			              "Role": "dim_ra_residencia.latitude"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_ra_residencias_have_latitudes"
 			        }
 			      ]
 			    },

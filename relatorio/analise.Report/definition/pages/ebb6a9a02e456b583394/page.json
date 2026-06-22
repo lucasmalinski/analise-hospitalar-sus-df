@@ -1,0 +1,15 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "ebb6a9a02e456b583394",
+  "displayName": "CNES",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "4672196ce22eed716012",
+      "target": "418e16a0a1e412787b16",
+      "type": "NoFilter"
+    }
+  ]
+}

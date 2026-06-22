@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
-  "name": "0f7fb31cdb38403031b8",
+  "name": "418e16a0a1e412787b16",
   "position": {
-    "x": 20.509490771043328,
-    "y": 430.6993061919099,
+    "x": 14.477287603089408,
+    "y": 396.91896845136796,
     "z": 22000,
-    "height": 200.26914517607017,
-    "width": 499.4664223065846,
+    "height": 232.84304228302133,
+    "width": 507.91150674172007,
     "tabOrder": 22000
   },
   "visual": {
@@ -20,15 +20,33 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_ra_residencia"
+                      "Entity": "dim_estabelecimento"
                     }
                   },
-                  "Property": "RA de Residência"
+                  "Property": "Região de Saúde"
                 }
               },
-              "queryRef": "dim_ra_residencia.RA de Residência",
-              "nativeQueryRef": "RA de Residência",
+              "queryRef": "dim_estabelecimento.Região de Saúde",
+              "nativeQueryRef": "Região de Saúde",
               "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Taxa de Mortalidade %"
+                }
+              },
+              "queryRef": "_Medidas.Taxa de Mortalidade %",
+              "nativeQueryRef": "Taxa de Mortalidade %"
             }
           ]
         },
@@ -289,7 +307,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top 10 Volume de internações por RA (cor = mortalidade)'"
+                  "Value": "'Distribuição de Internações por Região de Saúde'"
                 }
               }
             },
@@ -304,6 +322,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'center'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -336,178 +361,46 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "4cc92b3a4a8965601ebc",
+        "name": "0f183e69383300234016",
         "field": {
-          "Column": {
+          "Measure": {
             "Expression": {
               "SourceRef": {
-                "Entity": "dim_ra_residencia"
+                "Entity": "_Medidas"
               }
             },
-            "Property": "RA de Residência"
+            "Property": "Total Internações"
           }
         },
-        "type": "Categorical",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "d",
-              "Entity": "dim_ra_residencia",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Not": {
-                  "Expression": {
-                    "In": {
-                      "Expressions": [
-                        {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "d"
-                              }
-                            },
-                            "Property": "RA de Residência"
-                          }
-                        }
-                      ],
-                      "Values": [
-                        [
-                          {
-                            "Literal": {
-                              "Value": "null"
-                            }
-                          }
-                        ]
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "isInvertedSelectionMode": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
+        "type": "Advanced"
       },
       {
-        "name": "399a8b8bd0d4b82bcde8",
+        "name": "51ec18f6393307348e63",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Taxa de Mortalidade %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "215aa5d0c4d9152e6595",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "dim_ra_residencia"
+                "Entity": "dim_estabelecimento"
               }
             },
-            "Property": "RA de Residência"
+            "Property": "Região de Saúde"
           }
         },
-        "type": "TopN",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "subquery",
-              "Expression": {
-                "Subquery": {
-                  "Query": {
-                    "Version": 2,
-                    "From": [
-                      {
-                        "Name": "d",
-                        "Entity": "dim_ra_residencia",
-                        "Type": 0
-                      },
-                      {
-                        "Name": "_",
-                        "Entity": "_Medidas",
-                        "Type": 0
-                      }
-                    ],
-                    "Select": [
-                      {
-                        "Column": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Source": "d"
-                            }
-                          },
-                          "Property": "RA de Residência"
-                        },
-                        "Name": "field"
-                      }
-                    ],
-                    "OrderBy": [
-                      {
-                        "Direction": 2,
-                        "Expression": {
-                          "Measure": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "_"
-                              }
-                            },
-                            "Property": "Total Internações"
-                          }
-                        }
-                      }
-                    ],
-                    "Top": 10
-                  }
-                }
-              },
-              "Type": 2
-            },
-            {
-              "Name": "d",
-              "Entity": "dim_ra_residencia",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "In": {
-                  "Expressions": [
-                    {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Source": "d"
-                          }
-                        },
-                        "Property": "RA de Residência"
-                      }
-                    }
-                  ],
-                  "Table": {
-                    "SourceRef": {
-                      "Source": "subquery"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User"
+        "type": "Categorical"
       }
     ]
   }

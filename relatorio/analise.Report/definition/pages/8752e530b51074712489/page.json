@@ -4,5 +4,17 @@
   "displayName": "Geográfico",
   "displayOption": "FitToPage",
   "height": 720,
-  "width": 1280
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "f180da6555aaa3e3a5cb",
+      "target": "65fde5e4c28d33257e62",
+      "type": "NoFilter"
+    },
+    {
+      "source": "f180da6555aaa3e3a5cb",
+      "target": "0f7fb31cdb38403031b8",
+      "type": "NoFilter"
+    }
+  ]
 }

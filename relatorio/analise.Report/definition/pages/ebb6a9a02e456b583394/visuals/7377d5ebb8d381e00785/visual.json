@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
-  "name": "947390af49422d51a0b7",
+  "name": "7377d5ebb8d381e00785",
   "position": {
-    "x": 7.4361185494485547,
-    "y": 66.925066945036988,
-    "z": 19000,
-    "height": 573.82048139911353,
-    "width": 524.24635773612317,
-    "tabOrder": 19000
+    "x": 124.32432432432432,
+    "y": 698.10810810810813,
+    "z": 1000,
+    "height": 12.162162162162161,
+    "width": 12.162162162162161,
+    "tabOrder": 11000
   },
   "visual": {
     "visualType": "shape",
@@ -47,7 +47,7 @@
                   "expr": {
                     "ThemeDataColor": {
                       "ColorId": 0,
-                      "Percent": 0
+                      "Percent": -0.1
                     }
                   }
                 }
@@ -60,6 +60,47 @@
         }
       ],
       "outline": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
         {
           "properties": {
             "show": {

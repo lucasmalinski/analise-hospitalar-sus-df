@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
-  "name": "99646ecfcd6ca802a1d3",
+  "name": "4672196ce22eed716012",
   "position": {
-    "x": 1027.6847290640394,
-    "y": 8.8669950738916263,
-    "z": 20000,
-    "height": 80.6896551724138,
-    "width": 242.95566502463055,
-    "tabOrder": 20000
+    "x": 819.31034482758616,
+    "y": 10.527095711450777,
+    "z": 16000,
+    "height": 55.862068965517238,
+    "width": 218.12807881773398,
+    "tabOrder": 16000
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_detalhes"
+                      "Entity": "dim_municipio_residencia"
                     }
                   },
-                  "Property": "Complexidade do Procedimento"
+                  "Property": "UF de Residência"
                 }
               },
-              "queryRef": "dim_detalhes.Complexidade do Procedimento",
-              "nativeQueryRef": "Complexidade do Procedimento",
+              "queryRef": "dim_municipio_residencia.UF de Residência",
+              "nativeQueryRef": "UF de Residência",
               "active": true
             }
           ]
@@ -41,7 +41,7 @@
             "mode": {
               "expr": {
                 "Literal": {
-                  "Value": "'Basic'"
+                  "Value": "'Dropdown'"
                 }
               }
             }
@@ -54,19 +54,7 @@
             "orientation": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
-                }
-              }
-            },
-            "outlineColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 0,
-                      "Percent": -0.2
-                    }
-                  }
+                  "Value": "0D"
                 }
               }
             }
@@ -105,41 +93,14 @@
             "selectAllCheckboxEnabled": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
             "singleSelect": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "strictSingleSelect": {
-              "expr": {
-                "Literal": {
                   "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "items": [
-        {
-          "properties": {
-            "outlineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "15D"
-                }
-              }
-            },
-            "padding": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
                 }
               }
             }
@@ -161,7 +122,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Complexidade'"
+                  "Value": "'UF de Residência'"
                 }
               }
             },
@@ -215,53 +176,6 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "padding": [
-        {
-          "properties": {
-            "bottom": {
-              "expr": {
-                "Literal": {
-                  "Value": "15D"
-                }
-              }
-            },
-            "top": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
-            "right": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
-            "left": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "visualHeader": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
                 }
               }
             }

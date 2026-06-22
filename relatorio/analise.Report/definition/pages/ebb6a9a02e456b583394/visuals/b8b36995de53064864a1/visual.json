@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
-  "name": "947390af49422d51a0b7",
+  "name": "b8b36995de53064864a1",
   "position": {
-    "x": 7.4361185494485547,
-    "y": 66.925066945036988,
-    "z": 19000,
-    "height": 573.82048139911353,
-    "width": 524.24635773612317,
-    "tabOrder": 19000
+    "x": 0,
+    "y": 654.11764705882354,
+    "z": 0,
+    "height": 62.352941176470587,
+    "width": 1280,
+    "tabOrder": 0
   },
   "visual": {
     "visualType": "shape",
@@ -19,6 +19,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'rectangle'"
+                }
+              }
+            },
+            "roundEdge": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
                 }
               }
             }
@@ -57,9 +64,61 @@
           "selector": {
             "id": "default"
           }
+        },
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
         }
       ],
       "outline": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
         {
           "properties": {
             "show": {

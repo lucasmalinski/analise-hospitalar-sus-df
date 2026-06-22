@@ -46,7 +46,7 @@ table dim_data
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Nome Mês' = FORMAT(dim_data[Data], "mmmm")
+	column 'Nome Mês' = FORMAT(dim_data[Data], "mmmm", "pt-BR")
 		dataType: string
 		lineageTag: 11111111-aaaa-bbbb-cccc-000000000003
 		summarizeBy: none

@@ -30,8 +30,9 @@ Documentação completa do problema, hipóteses e critério de sucesso em [`docs
 - **Volumetria:** 985.216 linhas, 26 colunas brutas, cobrindo competências de jan/2022 a mai/2026
 - **Granularidade:** uma linha por AIH (Autorização de Internação Hospitalar) na competência mensal
 - **Licença:** dado público (Lei nº 12.527/2011 — Lei de Acesso à Informação)
+- **Persistência:** Azure Blob Storage como data lake canônico, em formato **Parquet** (≈30 MB consolidado vs ≈300 MB em CSV). O Power BI consome a URL pública do `dados_concatenados.parquet` no Azure via parâmetro `URL Base`.
 
-Dicionário completo de colunas e armadilhas de tratamento em [`data/README.md`](data/README.md).
+Dicionário completo de colunas, armadilhas de tratamento e camadas de armazenamento em [`data/README.md`](data/README.md). Operação do pipeline em [`src/ingestion/README.md`](src/ingestion/README.md).
 
 ---
 
@@ -70,17 +71,19 @@ Detalhamento dos KRs e amarração explícita aos KPIs em [`docs/kpis_okrs.md`](
 ### Pré-requisitos
 
 - Power BI Desktop **versão 2026.05 ou superior** com suporte ao formato PBIP/TMDL.
+- Conectividade pública com o blob `https://${AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/${AZURE_STORAGE_CONTAINER_NAME}/dados_concatenados.parquet` (consumo somente leitura).
 
 ### Passos
 
-1. Abrir `relatorio/analise.pbip`.
-2. Atualizar Visualização
+1. Abrir `relatorio/analise.pbip` no Power BI Desktop.
+2. Em **Página Inicial → Gerenciar Parâmetros**, verificar que `URL Base` aponta para o `dados_concatenados.parquet` no Azure (já vem preenchido).
+3. **OK → Atualizar Visualização** (carrega ~985 mil linhas em 30–60 s graças ao Parquet colunar).
 
 ---
 
 ## 6. Arquitetura do modelo (Star Schema)
 
-A modelagem segue **Ralph Kimball**: uma tabela fato magra (`fato_atendimento`) conectada a sete dimensões por relacionamentos `1:N` unidirecionais.
+A modelagem segue **Ralph Kimball**: **uma tabela fato magra** (`fato_atendimento`) conectada a **sete tabelas de dimensão** (`dim_data`, `dim_detalhes`, `dim_estabelecimento`, `dim_diagnostico`, `dim_procedimento`, `dim_ra_residencia`, `dim_municipio_residencia`) por relacionamentos `1:N` unidirecionais. Uma nona tabela técnica (`_Medidas`) abriga as 52 medidas DAX organizadas em 8 pastas, sem partição de dados.
 
 [Diagrama interativo — DrawDB](https://www.drawdb.app/editor?shareId=6fe92f7fac81a8f17a74b9028610b5f5)
 
@@ -136,10 +139,10 @@ analise-hospitalar-sus-df/
 ├── README.md                       este arquivo
 ├── apresentacao/
 │   └── slides.pdf                  apresentação final (10 min)
-├── data/
-│   ├── README.md                   dicionário de dados e armadilhas
-│   ├── raw/                        CSVs anuais (ignorados pelo Git)
-│   └── concat/                     CSV consolidado (ignorado pelo Git)
+├── data/                           ignorada pelo Git; cache de execução do pipeline
+│   ├── README.md                   dicionário de dados + arquitetura de armazenamento
+│   ├── raw/                        CSVs efêmeros (apagados após conversão em Parquet)
+│   └── parquet/                    Parquets persistentes (cache local do data lake Azure)
 ├── docs/
 │   ├── problema_de_negocio.md      cenário, pergunta-âncora, stakeholders
 │   ├── kpis_okrs.md                catálogo de KPIs, OKRs e cartões
@@ -164,4 +167,4 @@ analise-hospitalar-sus-df/
 
 ## 9. Versionamento
 
-Repositório versionado em formato **PBIP/TMDL** — modelo semântico declarativo em texto puro, suportando code review e merge no Git. As pastas `data/` (CSVs locais) e os arquivos `localSettings.json`/`cache.abf` do Power BI estão ignorados via `.gitignore`.
+Repositório versionado em formato **PBIP/TMDL** — modelo semântico declarativo em texto puro, suportando code review e merge no Git. A pasta `data/` (Parquets e CSVs locais, todos efêmeros), o arquivo `src/ingestion/.env` (credenciais Azure) e os arquivos `localSettings.json`/`cache.abf` do Power BI estão ignorados via `.gitignore`. A fonte de verdade dos dados é o **Azure Blob Storage**, atualizado automaticamente pelo workflow do GitHub Actions.

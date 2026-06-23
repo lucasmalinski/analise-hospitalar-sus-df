@@ -5391,7 +5391,7 @@ cultureInfo en-GB
 			          }
 			        },
 			        {
-			          "Internações (Pacientes residentes Fora do DF)": {
+			          "Internações (Pacientes Residentes Fora do DF)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

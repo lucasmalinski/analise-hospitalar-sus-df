@@ -1,7 +1,7 @@
 src/ingestion/.venv/
-data/concat
-data/raw
+data/
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
 docs/PLANO_DE_ACAO.md
 .env
+relatorio/relatorio_hospitalar-SUS_DF.pbix
